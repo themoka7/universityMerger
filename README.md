@@ -9,8 +9,7 @@
 | `merger-schedule.html` | 일정판 본체. Claude Artifact 소스(게시 시 `<!doctype>`·`<head>`·`<body>` 골격이 자동으로 감싸집니다) |
 | `docs/index.html` | GitHub Pages로 배포되는 단독 HTML. `build.py`가 위 파일을 감싸 생성 |
 | `docs/firebase-config.js` | Firestore 공유 저장 설정. 채우지 않으면 각자 브라우저 저장으로 동작 |
-| `build.py` | `merger-schedule.html` → `index.html` · `docs/index.html` 빌드 |
-| `seed/tasks.json` | 초기 과제 27건. Artifact 데이터베이스 `tasks` 컬렉션에 주입한 값이자, 공유 저장에 연결하지 못한 화면에서 쓰는 기본 일정 |
+| `build.py` | `merger-schedule.html` → `docs/index.html` 빌드 |
 
 `merger-schedule.html`을 고친 뒤에는 반드시 `python3 build.py`를 실행해 `docs/index.html`을 다시 만들어야 Pages에 반영됩니다. `docs/firebase-config.js`는 이미 있으면 덮어쓰지 않습니다.
 
@@ -76,11 +75,15 @@ meta/board   { org, title, target, phaseColors }
 - `status` — `todo` / `doing` / `done` / `late` / `hold`
 - `start`, `end` — `YYYY-MM-DD`
 
-공유 저장소에 연결할 수 없는 환경(GitHub Pages, 로컬 파일 등)에서는 `seed/tasks.json`을 내장한 기본 일정을 띄우고 이후 변경은 그 브라우저의 `localStorage`에만 저장합니다. 화면 상단에 그 사실을 안내합니다.
+공유 저장소에 연결할 수 없으면 **빈 판**으로 시작하고 그 사실과 원인을 화면 상단에 안내합니다. 이후 변경은 그 브라우저의 `localStorage`에만 남습니다. 예시 일정을 지어내 채우지 않습니다 — 남의 화면에서 온 일정과 구분이 안 되기 때문입니다.
 
 ## 화면 디자인
 
 부산대학교 교육정보시스템의 화면 규칙을 따릅니다 — 남색 상단바와 녹색 라인, 각진 흰 카드에 옅은 청회색 헤더 밴드, 라벨·파란 숫자·기준일 캡션 3단 지표 카드, 고딕 서체, 낮은 모서리 반경. 단계 색은 남색 → 파랑 → 청록 → 녹색 → 겨자 → 주황 → 적색 순서로 진행 단계를 나타냅니다.
+
+## 기본 일정 정리
+
+초기에 표준 골격 27건(`t01`~`t21`, `n01`~`n06`)을 넣어 시험했습니다. 화면 우상단 `설정`에 남은 건수가 표시되며, `기본 일정 N건 지우기`로 한 번에 지웁니다. id 가 두 자리 숫자로 끝나는 것만 골라 지우므로 **직접 입력한 과제와 메모는 남습니다**. 지우고 나면 `meta/board.noSeed` 가 서므로 다시 권하지 않습니다.
 
 ## 공유 저장 (Firestore)
 
@@ -119,6 +122,3 @@ Firestore SDK는 jsDelivr에서 `firebase@10.14.1` compat 빌드를 불러옵니
 주소: **https://themoka7.github.io/universityMerger/**
 Pages는 `docs/firebase-config.js`를 채우면 공유 저장, 비워 두면 각자 브라우저 저장으로 동작합니다.
 
-## 시드 데이터에 관하여
-
-`seed/tasks.json`의 과제 목록과 날짜는 실제 확정 일정이 아니라 **회의에서 채워 넣기 위한 표준 골격**입니다. 부서 구성, 소요 기간, 법정 시한(예: 대교협 전형계획 사전예고)은 각 기관 상황에 맞게 조정해서 쓰십시오.
