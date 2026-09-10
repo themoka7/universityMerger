@@ -171,7 +171,7 @@ input[type="search"]{min-width:150px}
 .newspan{position:absolute;height:46px;border:2px dashed var(--accent);background:var(--accent-soft);
   opacity:.85;border-radius:2px;pointer-events:none;z-index:9;display:flex;align-items:center;
   padding:0 8px;font-size:11px;font-weight:500;color:var(--accent-ink);overflow:hidden}
-.drophint{position:absolute;left:50%;top:26px;transform:translateX(-50%);z-index:2;pointer-events:none;
+.drophint{position:absolute;left:50%;top:26px;transform:translateX(-50%);z-index:8;pointer-events:none;
   color:var(--ink-3);font-size:13px;text-align:center;line-height:1.7}
 .drophint b{display:block;font-family:var(--serif);font-size:16px;color:var(--ink-2);margin-bottom:2px}
 
@@ -394,15 +394,25 @@ function loadScript(src){
 function tryFirebase(){
   var cfg=window.FIREBASE_CONFIG;
   if(!cfg||!cfg.projectId||/^여기에/.test(String(cfg.projectId)))return Promise.resolve(null);
-  var CDN="https://cdn.jsdelivr.net/npm/firebase@10.14.1/";
-  return loadScript(CDN+"firebase-app-compat.js")
-    .then(function(){ return loadScript(CDN+"firebase-firestore-compat.js"); })
-    .then(function(){
-      if(!window.firebase||!firebase.firestore)return null;
-      if(!firebase.apps.length)firebase.initializeApp(cfg);
-      backend="firebase"; return firebase.firestore();
-    })
-    .catch(function(){ return null; });
+  /* jsDelivr 가 막힌 망에서도 되도록 gstatic 을 예비로 둔다.
+     Artifact 에서는 저장소 능력이 먼저 잡혀 여기까지 오지 않는다. */
+  var HOSTS=["https://cdn.jsdelivr.net/npm/firebase@10.14.1/",
+             "https://www.gstatic.com/firebasejs/10.14.1/"];
+  function attempt(i){
+    if(i>=HOSTS.length)return Promise.resolve(null);
+    return loadScript(HOSTS[i]+"firebase-app-compat.js")
+      .then(function(){ return loadScript(HOSTS[i]+"firebase-firestore-compat.js"); })
+      .then(function(){
+        if(!window.firebase||!firebase.firestore)throw new Error("sdk");
+        if(!firebase.apps.length)firebase.initializeApp(cfg);
+        backend="firebase"; return firebase.firestore();
+      })
+      .catch(function(){ return attempt(i+1); });
+  }
+  return attempt(0).then(function(d){
+    if(!d)note("Firebase SDK 를 불러오지 못했습니다. 사내망 차단 여부를 확인해 주십시오. 그전까지는 이 브라우저에만 저장됩니다.");
+    return d;
+  });
 }
 function storeLabel(){
   if(backend==="firebase")return "Firebase 공유 저장";
@@ -619,7 +629,31 @@ function render(){
   else host.appendChild(renderDepts(list));
   $("#stamp").textContent="v"+BUILD+" · "+storeLabel();
 }
-function emptyBox(a,b){ var d=el("div","empty"); d.appendChild(el("strong",null,a)); d.appendChild(el("p",null,b)); return d; }
+function emptyBox(a,b){
+  var d=el("div","empty"); d.appendChild(el("strong",null,a)); d.appendChild(el("p",null,b));
+  var sb=seedButton(); if(sb)d.appendChild(sb);
+  return d;
+}
+/* 새로 연결한 공유 저장소는 비어 있다. 표준 골격 27건을 한 번에 넣어 준다. */
+function seedButton(){
+  if(local||!db||tasks.length)return null;
+  var b=el("button","btn","기본 일정 "+FALLBACK.length+"건 불러오기"); b.type="button";
+  b.style.marginTop="12px";
+  b.addEventListener("click",function(){
+    b.disabled=true; b.textContent="넣는 중…";
+    var now=new Date().toISOString();
+    Promise.all(FALLBACK.map(function(t){
+      var o=clone(t), id=o.id; delete o.id; o.updatedAt=now;
+      return db.collection("tasks").doc(id).set(o);
+    })).then(function(){
+      return db.doc("meta/board").set({org:FALLBACK_META.org,title:FALLBACK_META.title,target:FALLBACK_META.target});
+    }).then(function(){ note(""); }).catch(function(e){
+      b.disabled=false; b.textContent="다시 시도";
+      note("기본 일정을 넣지 못했습니다"+(e&&e.code?" ("+e.code+")":"")+". Firestore 규칙에서 쓰기가 열려 있는지 확인해 주십시오.");
+    });
+  });
+  return b;
+}
 function stamp(){
   var d=new Date();
   return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
@@ -738,6 +772,8 @@ function renderCanvas(list){
     var hint=el("div","drophint");
     hint.appendChild(el("b",null,"빈 곳을 좌우로 끌어 보세요"));
     hint.appendChild(document.createTextNode("끈 만큼이 그 과제의 기간이 됩니다"));
+    var sb=seedButton();
+    if(sb){ sb.style.pointerEvents="auto"; hint.appendChild(document.createElement("br")); hint.appendChild(sb); }
     surf.appendChild(hint);
   }
 

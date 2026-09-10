@@ -16,10 +16,11 @@
  *     조건을 거십시오.
  */
 window.FIREBASE_CONFIG = {
-  apiKey: "여기에-apiKey",
-  authDomain: "여기에-프로젝트.firebaseapp.com",
-  projectId: "여기에-projectId",
-  storageBucket: "여기에-프로젝트.appspot.com",
-  messagingSenderId: "여기에-senderId",
-  appId: "여기에-appId"
+  apiKey: "AIzaSyC7aJarz6EyXsDGy9G-2pDgwSMEVgEFUhM",
+  authDomain: "universitymerger.firebaseapp.com",
+  projectId: "universitymerger",
+  storageBucket: "universitymerger.firebasestorage.app",
+  messagingSenderId: "18070832527",
+  appId: "1:18070832527:web:b72adce16583f3d78137fa",
+  measurementId: "G-CV3T2CKD0Z"
 };
