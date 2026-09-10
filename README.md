@@ -8,6 +8,7 @@
 | --- | --- |
 | `merger-schedule.html` | 일정판 본체. Claude Artifact 소스(게시 시 `<!doctype>`·`<head>`·`<body>` 골격이 자동으로 감싸집니다) |
 | `index.html`, `docs/index.html` | GitHub Pages용 단독 HTML(내용 동일). `build.py`가 위 파일을 감싸 생성 |
+| `firebase-config.js` | Firestore 공유 저장 설정. 채우지 않으면 각자 브라우저 저장으로 동작 |
 | `build.py` | `merger-schedule.html` → `index.html` · `docs/index.html` 빌드 |
 | `seed/tasks.json` | 초기 과제 27건. Artifact 데이터베이스 `tasks` 컬렉션에 주입한 값이자, 공유 저장에 연결하지 못한 화면에서 쓰는 기본 일정 |
 
@@ -60,11 +61,45 @@ meta/board   { title, target }
 
 공유 저장소에 연결할 수 없는 환경(GitHub Pages, 로컬 파일 등)에서는 `seed/tasks.json`을 내장한 기본 일정을 띄우고 이후 변경은 그 브라우저의 `localStorage`에만 저장합니다. 화면 상단에 그 사실을 안내합니다.
 
+## 화면 디자인
+
+부산대학교 교육정보시스템의 화면 규칙을 따릅니다 — 남색 상단바와 녹색 라인, 각진 흰 카드에 옅은 청회색 헤더 밴드, 라벨·파란 숫자·기준일 캡션 3단 지표 카드, 고딕 서체, 낮은 모서리 반경. 단계 색은 남색 → 파랑 → 청록 → 녹색 → 겨자 → 주황 → 적색 순서로 진행 단계를 나타냅니다.
+
+## 공유 저장 (Firestore)
+
+Pages에는 서버가 없으므로 기본값은 **각자 브라우저 저장**입니다. 여러 부서가 같은 일정을 함께 고치려면 Firestore를 붙입니다.
+
+1. Firebase 콘솔에서 프로젝트 → **Firestore Database** 만들기
+2. 프로젝트 설정 → 내 앱 → 웹 앱 등록 후 `firebaseConfig` 값 복사
+3. `firebase-config.js`의 `window.FIREBASE_CONFIG`에 붙여넣고 커밋·푸시
+4. Firestore → 규칙:
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /tasks/{doc} { allow read, write: if true; }
+    match /meta/{doc}  { allow read, write: if true; }
+  }
+}
+```
+
+설정이 인식되면 화면 오른쪽 아래 표시가 `Firebase 공유 저장`으로 바뀌고, 한 사람이 고친 일정이 다른 사람 화면에 바로 반영됩니다.
+
+**위 규칙은 링크를 아는 누구나 읽고 고칠 수 있습니다.** 교내로 좁히려면 Google 로그인을 붙이고 규칙을 다음과 같이 겁니다.
+
+```
+allow read, write: if request.auth != null
+  && request.auth.token.email.matches('.*@pusan[.]ac[.]kr');
+```
+
+Firestore SDK는 jsDelivr에서 `firebase@10.14.1` compat 빌드를 불러옵니다. compat API가 Artifact의 저장소 API와 모양이 같아 저장 코드는 양쪽이 동일합니다.
+
 ## GitHub Pages
 
 Pages 소스가 `(브랜치, /)`로 잡혀 있든 `(브랜치, /docs)`로 잡혀 있든 열리도록 루트와 `docs/` 양쪽에 같은 파일을 둡니다.
 권장 설정: Settings → Pages → Source: Deploy from a branch → **main** / **/(root)**.
-Pages에는 공유 저장소가 없으므로 **각자 브라우저에 저장되는 개인 화면**입니다. 여러 부서가 같은 일정을 함께 고치려면 Artifact 쪽 링크를 쓰십시오.
+Pages는 `firebase-config.js`를 채우면 공유 저장, 비워 두면 각자 브라우저 저장으로 동작합니다.
 
 ## 학사 개시 준비 체인
 

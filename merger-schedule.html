@@ -1,102 +1,123 @@
 <title>통합 추진 일정판</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
 :root{
-  --paper:#f1f4f4; --surface:#ffffff; --surface-2:#e8eded; --surface-3:#f7f9f9; --canvas:#eef2f2;
-  --ink:#132029; --ink-2:#4a5c63; --ink-3:#7e9096;
-  --line:#d7dede; --line-2:#bcc8c9;
-  --accent:#0f5f5c; --accent-ink:#0b4442; --accent-soft:#dcebe8; --on-accent:#ffffff;
-  --todo:#6b7c82; --doing:#9a6410; --done:#2c6b4f; --late:#a4302a; --hold:#7b6a86;
-  --p1:#0f5f5c; --p2:#2b7a6a; --p3:#5c8f58; --p4:#93903f; --p5:#b07a38; --p6:#a3603c; --p7:#a04b3f;
-  --edge:#6b8386;
-  --shadow:0 1px 2px rgba(19,32,41,.05), 0 10px 26px -16px rgba(19,32,41,.35);
-  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
-  --serif:"Gowun Batang","Nanum Myeongjo",serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --navy:#17458C; --navy-2:#0F3269; --green:#00A650;
+  --paper:#EDF1F5; --surface:#ffffff; --surface-2:#E5EDF8; --surface-3:#F5F8FC; --canvas:#F1F4F8;
+  --ink:#1B2534; --ink-2:#4A586B; --ink-3:#8290A3;
+  --line:#D8DEE6; --line-2:#BFC9D6;
+  --accent:#1668C1; --accent-ink:#0F4E96; --accent-soft:#E3EDF9; --on-accent:#ffffff;
+  --todo:#6B7A8D; --doing:#B26A00; --done:#1E7A4A; --late:#C0392B; --hold:#6B5B95;
+  --p1:#17458C; --p2:#1668C1; --p3:#0E7C86; --p4:#00834B; --p5:#7E7A1C; --p6:#B26A00; --p7:#B0392B;
+  --edge:#8494A8;
+  --shadow:0 1px 2px rgba(23,69,140,.06);
+  --sans:"Noto Sans KR","Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
+  --serif:var(--sans);
+  --mono:var(--sans);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --paper:#0d1517; --surface:#151f22; --surface-2:#1d292c; --surface-3:#111a1d; --canvas:#0a1113;
-    --ink:#e7eeee; --ink-2:#a9bcbf; --ink-3:#7b9195;
-    --line:#28373a; --line-2:#3a4d51;
-    --accent:#5cbdad; --accent-ink:#8fd7c9; --accent-soft:#1a3532; --on-accent:#08171a;
-    --todo:#8ea0a6; --doing:#e0a54a; --done:#6cc295; --late:#e88b80; --hold:#b39ec4;
-    --p1:#2e8f88; --p2:#41a58f; --p3:#7cb46f; --p4:#c0b855; --p5:#d69a4e; --p6:#d4835f; --p7:#cf6f5d;
-    --edge:#5c7275;
-    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -18px rgba(0,0,0,.8);
+    --navy:#12315F; --navy-2:#0C2447; --green:#12B45E;
+    --paper:#0F141A; --surface:#161C24; --surface-2:#1E2833; --surface-3:#131A21; --canvas:#0D1319;
+    --ink:#E4E9EF; --ink-2:#A7B4C4; --ink-3:#7A8899;
+    --line:#2A3542; --line-2:#3B4857;
+    --accent:#4E9BE8; --accent-ink:#8FC2F2; --accent-soft:#152A40; --on-accent:#07121D;
+    --todo:#8B9AAC; --doing:#E0A54A; --done:#5BC48D; --late:#E8877C; --hold:#A99BD0;
+    --p1:#4B85D6; --p2:#54A6EE; --p3:#3FAEB6; --p4:#3BB578; --p5:#B6B048; --p6:#DD9A45; --p7:#DE7566;
+    --edge:#66788C;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
   }
 }
 :root[data-theme="dark"]{
-  --paper:#0d1517; --surface:#151f22; --surface-2:#1d292c; --surface-3:#111a1d; --canvas:#0a1113;
-  --ink:#e7eeee; --ink-2:#a9bcbf; --ink-3:#7b9195;
-  --line:#28373a; --line-2:#3a4d51;
-  --accent:#5cbdad; --accent-ink:#8fd7c9; --accent-soft:#1a3532; --on-accent:#08171a;
-  --todo:#8ea0a6; --doing:#e0a54a; --done:#6cc295; --late:#e88b80; --hold:#b39ec4;
-  --p1:#2e8f88; --p2:#41a58f; --p3:#7cb46f; --p4:#c0b855; --p5:#d69a4e; --p6:#d4835f; --p7:#cf6f5d;
-  --edge:#5c7275;
-  --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -18px rgba(0,0,0,.8);
+--navy:#12315F; --navy-2:#0C2447; --green:#12B45E;
+  --paper:#0F141A; --surface:#161C24; --surface-2:#1E2833; --surface-3:#131A21; --canvas:#0D1319;
+  --ink:#E4E9EF; --ink-2:#A7B4C4; --ink-3:#7A8899;
+  --line:#2A3542; --line-2:#3B4857;
+  --accent:#4E9BE8; --accent-ink:#8FC2F2; --accent-soft:#152A40; --on-accent:#07121D;
+  --todo:#8B9AAC; --doing:#E0A54A; --done:#5BC48D; --late:#E8877C; --hold:#A99BD0;
+  --p1:#4B85D6; --p2:#54A6EE; --p3:#3FAEB6; --p4:#3BB578; --p5:#B6B048; --p6:#DD9A45; --p7:#DE7566;
+  --edge:#66788C;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55;-webkit-text-size-adjust:100%}
-.wrap{max-width:1480px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:flex;flex-direction:column;gap:16px}
+.appbar{background:var(--navy);color:#fff}
+.appbar-in{max-width:1480px;margin:0 auto;padding:0 18px;height:46px;display:flex;align-items:center;
+  justify-content:space-between;gap:14px}
+.appbar .brand{display:flex;align-items:center;gap:9px;min-width:0}
+.appbar .mk{width:15px;height:15px;background:var(--green);border-radius:2px;flex:0 0 auto}
+.appbar .org{font-weight:700;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+.appbar .sys{font-size:13px;opacity:.86;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.appbar-r{display:flex;align-items:center;gap:10px;flex:0 0 auto;font-size:12px}
+.appbar-r .dt{opacity:.85;font-variant-numeric:tabular-nums}
+.appbar-r button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.32);color:#fff;
+  border-radius:2px;padding:3px 11px;cursor:pointer;font-size:12px}
+.appbar-r button:hover{background:rgba(255,255,255,.24)}
+.greenline{height:3px;background:var(--green)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:13px;line-height:1.6;-webkit-text-size-adjust:100%}
+.wrap{max-width:1480px;margin:0 auto;padding-inline:18px;padding-block:16px 44px;display:flex;flex-direction:column;gap:13px}
 h1,h2,h3{margin:0;text-wrap:balance}
 button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 
-.masthead{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;justify-content:space-between;
-  border-bottom:2px solid var(--ink);padding-bottom:14px}
-.eyebrow{margin:0 0 6px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:600}
-.masthead h1{font-family:var(--serif);font-size:clamp(26px,4vw,36px);font-weight:700;letter-spacing:-.01em;line-height:1.15}
-.masthead .sub{margin:7px 0 0;color:var(--ink-2);max-width:60ch;font-size:13.5px}
-.dday{text-align:right;flex:0 0 auto}
-.dday .label{font-size:11px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
-.dday .count{font-family:var(--mono);font-size:32px;font-weight:500;letter-spacing:-.02em;line-height:1.1;color:var(--accent)}
-.dday .date{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
-.dday button{background:none;border:0;padding:0;margin-top:2px;font-size:11px;color:var(--ink-3);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.masthead{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;justify-content:space-between;
+  border-bottom:2px solid var(--navy);padding-bottom:9px}
+.eyebrow{margin:0 0 3px;font-size:11.5px;color:var(--ink-3)}
+.masthead h1{font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1.25;color:var(--navy-2)}
+.masthead h1::before{content:"";display:inline-block;width:4px;height:15px;background:var(--navy);
+  margin-right:7px;vertical-align:-1px;border-radius:1px}
+.masthead .sub{margin:5px 0 0;color:var(--ink-2);max-width:74ch;font-size:12.5px}
 
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(126px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;overflow:hidden}
-.stat{background:var(--surface);padding:11px 14px;display:flex;flex-direction:column;gap:1px}
-.stat .n{font-family:var(--mono);font-size:22px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
-.stat .t{font-size:12px;color:var(--ink-2)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:9px 12px 8px;
+  display:flex;flex-direction:column;gap:2px}
+.stat .t{font-size:12px;color:var(--ink);font-weight:500}
+.stat .n{font-size:23px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.25;color:var(--accent);letter-spacing:-.02em}
+.stat .c{font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
 .stat.is-warnk .n,.stat.is-late .n{color:var(--late)}
 .stat.is-doing .n{color:var(--doing)} .stat.is-done .n{color:var(--done)}
+.stat.is-dday .n{color:var(--navy)}
 
 .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
-.tabs{display:inline-flex;border:1px solid var(--line-2);border-radius:3px;overflow:hidden;background:var(--surface)}
-.tabs button{border:0;background:none;padding:7px 15px;cursor:pointer;color:var(--ink-2);font-weight:500;border-right:1px solid var(--line)}
-.tabs button:last-child{border-right:0}
-.tabs button[aria-selected="true"]{background:var(--accent);color:var(--on-accent)}
+.tabs{display:inline-flex;gap:3px}
+.tabs button{border:1px solid var(--line-2);border-bottom-color:var(--line-2);background:var(--surface-3);
+  padding:6px 16px;cursor:pointer;color:var(--ink-2);font-weight:500;border-radius:2px 2px 0 0;font-size:12.5px}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--navy-2);font-weight:700;
+  border-top:2px solid var(--accent);padding-top:5px}
 .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 select,input[type="text"],input[type="date"],input[type="search"],textarea{
-  font:inherit;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);border-radius:3px;padding:6px 9px}
+  font:inherit;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);border-radius:2px;padding:5px 8px}
+select:focus,input:focus,textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 2px var(--accent-soft)}
 input[type="search"]{min-width:150px}
-.btn{border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);padding:7px 14px;border-radius:3px;cursor:pointer;font-weight:600}
+.btn{border:1px solid var(--accent);background:var(--accent);color:var(--on-accent);padding:6px 14px;border-radius:2px;cursor:pointer;font-weight:500}
 .btn.ghost{background:var(--surface);color:var(--ink);border-color:var(--line-2);font-weight:500}
 .btn:hover{filter:brightness(1.07)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:4px 11px;font-size:12px;cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
-.note{border-left:3px solid var(--accent);background:var(--accent-soft);color:var(--accent-ink);padding:9px 13px;font-size:13px;border-radius:0 3px 3px 0}
+.chip{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);border-radius:2px;padding:3px 10px;font-size:12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.note{border:1px solid var(--accent);border-left-width:3px;background:var(--accent-soft);color:var(--accent-ink);padding:8px 12px;font-size:12.5px;border-radius:0 2px 2px 0}
 .note[hidden]{display:none!important}
 
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow)}
-.panel-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line)}
-.panel-head h2{font-family:var(--serif);font-size:17px;font-weight:700}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:2px;box-shadow:var(--shadow)}
+.panel-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;
+  padding:8px 13px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}
+.panel-head h2{font-size:14px;font-weight:700;color:var(--navy-2)}
+.panel-head h2::before{content:"";display:inline-block;width:3px;height:12px;background:var(--navy);
+  margin-right:6px;vertical-align:-1px}
 .panel-head .hint{font-size:12px;color:var(--ink-3)}
-.zoom{display:inline-flex;border:1px solid var(--line-2);border-radius:3px;overflow:hidden}
-.zoom button{border:0;background:var(--surface);padding:4px 10px;cursor:pointer;color:var(--ink-2);border-right:1px solid var(--line);font-size:12px}
+.zoom{display:inline-flex;border:1px solid var(--line-2);border-radius:2px;overflow:hidden}
+.zoom button{border:0;background:var(--surface);padding:3px 10px;cursor:pointer;color:var(--ink-2);border-right:1px solid var(--line);font-size:12px}
 .zoom button:last-child{border-right:0}
-.zoom button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.zoom button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);font-weight:700}
 
 /* ---------- 캔버스 ---------- */
 .board{display:grid;grid-template-columns:minmax(0,1fr) 300px}
 .scroller{position:relative;overflow:auto;max-height:min(70vh,660px);background:var(--canvas);
   border-right:1px solid var(--line);overscroll-behavior:contain}
-.ruler{position:sticky;top:0;z-index:6;height:34px;display:flex;background:var(--surface);
+.ruler{position:sticky;top:0;z-index:6;height:34px;display:flex;background:var(--surface-2);
   border-bottom:1px solid var(--line-2);width:max-content;min-width:100%}
-.ruler .mo{flex:0 0 auto;border-left:1px solid var(--line);padding:3px 0 0 5px;font-family:var(--mono);
+.ruler .mo{flex:0 0 auto;border-left:1px solid var(--line-2);padding:3px 0 0 5px;font-variant-numeric:tabular-nums;
   font-size:11px;color:var(--ink-2);white-space:nowrap;overflow:hidden;line-height:1.25}
 .ruler .mo:first-child{border-left:0}
 .ruler .mo .y{display:block;font-size:9.5px;color:var(--ink-3);letter-spacing:.06em}
@@ -105,14 +126,14 @@ input[type="search"]{min-width:150px}
 .vgrid i{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
 .vgrid i.q{background:var(--line-2)}
 .nowline{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed var(--late);pointer-events:none;z-index:4}
-.nowline b{position:absolute;top:2px;left:5px;white-space:nowrap;font:500 10px var(--mono);color:var(--late);background:var(--surface);padding:0 4px;border-radius:2px}
+.nowline b{position:absolute;top:2px;left:5px;white-space:nowrap;font-size:10px;font-weight:700;color:var(--late);background:var(--surface);padding:0 4px;border-radius:2px}
 .edges{position:absolute;inset:0;overflow:visible;pointer-events:none;z-index:3}
 .edges path.e{fill:none;stroke:var(--edge);stroke-width:1.9;pointer-events:stroke;cursor:pointer}
 .edges path.e:hover{stroke:var(--ink);stroke-width:2.6}
 .edges path.e.bad{stroke:var(--late);stroke-dasharray:5 3;stroke-width:2}
 .edges path.tmp{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:4 3}
 
-.node{position:absolute;height:46px;border-radius:5px;border:1px solid rgba(0,0,0,.16);
+.node{position:absolute;height:46px;border-radius:2px;border:1px solid rgba(0,0,0,.16);
   display:flex;flex-direction:column;justify-content:center;padding:0 9px;gap:1px;
   color:var(--on-accent);cursor:grab;touch-action:none;z-index:5;
   box-shadow:0 1px 2px rgba(0,0,0,.18);background-clip:padding-box}
@@ -138,8 +159,8 @@ input[type="search"]{min-width:150px}
 .tagout b{font-weight:600;color:var(--ink)}
 .tagout span{font-size:10px;color:var(--ink-3)}
 .newspan{position:absolute;height:46px;border:2px dashed var(--accent);background:var(--accent-soft);
-  opacity:.75;border-radius:5px;pointer-events:none;z-index:9;display:flex;align-items:center;
-  padding:0 8px;font:500 11px var(--mono);color:var(--accent-ink);overflow:hidden}
+  opacity:.85;border-radius:2px;pointer-events:none;z-index:9;display:flex;align-items:center;
+  padding:0 8px;font-size:11px;font-weight:500;color:var(--accent-ink);overflow:hidden}
 .drophint{position:absolute;left:50%;top:26px;transform:translateX(-50%);z-index:2;pointer-events:none;
   color:var(--ink-3);font-size:13px;text-align:center;line-height:1.7}
 .drophint b{display:block;font-family:var(--serif);font-size:16px;color:var(--ink-2);margin-bottom:2px}
@@ -147,13 +168,13 @@ input[type="search"]{min-width:150px}
 /* 인스펙터 */
 .insp{padding:14px;display:flex;flex-direction:column;gap:11px;overflow:auto;max-height:min(70vh,660px)}
 .insp .none{color:var(--ink-3);font-size:13px;line-height:1.7}
-.insp .none b{display:block;font-family:var(--serif);font-size:15px;color:var(--ink-2);margin-bottom:4px}
+.insp .none b{display:block;font-size:13px;font-weight:700;color:var(--navy-2);margin-bottom:4px}
 .insp .f{display:flex;flex-direction:column;gap:3px}
 .insp label{font-size:11px;letter-spacing:.05em;color:var(--ink-2);font-weight:600}
 .insp input,.insp select,.insp textarea{width:100%;font-size:13px}
 .insp textarea{resize:vertical;min-height:48px}
 .insp .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.insp h3{font-family:var(--serif);font-size:15px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.insp h3{font-size:13px;font-weight:700;color:var(--navy-2);background:var(--surface-2);border:1px solid var(--line-2);margin:-14px -14px 2px;padding:7px 13px}
 .deplist{display:flex;flex-direction:column;gap:4px}
 .deplist .d{display:flex;align-items:center;gap:6px;font-size:12px;background:var(--surface-3);
   border:1px solid var(--line);border-radius:3px;padding:4px 6px}
@@ -162,53 +183,54 @@ input[type="search"]{min-width:150px}
 .deplist .d button:hover{color:var(--late)}
 .deplist .warn{color:var(--late);font-size:11.5px;font-weight:500}
 .deplist .empty{color:var(--ink-3);font-size:12px}
-.danger{border:1px solid var(--late);color:var(--late);background:var(--surface);border-radius:3px;padding:6px 12px;cursor:pointer;font-size:12.5px}
+.danger{border:1px solid var(--late);color:var(--late);background:var(--surface);border-radius:2px;padding:5px 12px;cursor:pointer;font-size:12.5px}
 
 /* 표 */
 .tbl-wrap{overflow-x:auto}
 table{border-collapse:collapse;width:100%;min-width:840px;font-size:13px}
-th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--surface-3);position:sticky;top:0;z-index:1}
+th,td{text-align:left;padding:7px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--navy-2);font-weight:700;background:var(--surface-2);position:sticky;top:0;z-index:1;border-bottom:1px solid var(--line-2)}
 tbody tr:hover{background:var(--surface-3)}
-td.date{font-family:var(--mono);font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+td.date{font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ink-2)}
 td .task-t{font-weight:600}
 td .task-n{color:var(--ink-3);font-size:12px;margin-top:2px}
 td .task-w{color:var(--late);font-size:12px;margin-top:3px;font-weight:500}
-.rowact{border:1px solid var(--line-2);background:var(--surface);border-radius:3px;padding:3px 9px;font-size:12px;cursor:pointer;white-space:nowrap}
-.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.rowact{border:1px solid var(--line-2);background:var(--surface-3);border-radius:2px;padding:2px 9px;font-size:12px;cursor:pointer;white-space:nowrap;color:var(--accent-ink)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;padding:1px 8px;border-radius:2px;border:1px solid currentColor;white-space:nowrap}
 .pill .d{width:6px;height:6px;border-radius:50%;background:currentColor}
 .pill.todo{color:var(--todo)} .pill.doing{color:var(--doing)} .pill.done{color:var(--done)}
 .pill.late{color:var(--late)} .pill.hold{color:var(--hold)}
-.tag{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:2px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.tag{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:2px;background:var(--surface-2);border:1px solid var(--line-2);color:var(--ink-2);white-space:nowrap;font-weight:500}
 
 /* 부서별 */
 .depts{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;padding:16px}
-.dept{border:1px solid var(--line);border-radius:3px;background:var(--surface-3);display:flex;flex-direction:column}
-.dept > header{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:10px 13px;border-bottom:1px solid var(--line)}
-.dept h3{font-family:var(--serif);font-size:16px;font-weight:700}
-.dept .cnt{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+.dept{border:1px solid var(--line);border-radius:2px;background:var(--surface);display:flex;flex-direction:column}
+.dept > header{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:7px 11px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}
+.dept h3{font-size:13px;font-weight:700;color:var(--navy-2)}
+.dept .cnt{font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
 .dept ul{list-style:none;margin:0;padding:4px 0;display:flex;flex-direction:column}
-.dept li{padding:8px 13px;border-bottom:1px dashed var(--line);display:flex;flex-direction:column;gap:4px}
+.dept li{padding:6px 11px 6px 20px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:3px;position:relative}
+.dept li::before{content:"";position:absolute;left:11px;top:13px;width:3px;height:3px;background:var(--accent);border-radius:50%}
 .dept li:last-child{border-bottom:0}
 .dept li .top{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
 .dept li .nm{font-size:13px;font-weight:500;cursor:pointer;text-align:left;background:none;border:0;padding:0;flex:1}
 .dept li .nm:hover{text-decoration:underline}
-.dept li .meta{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.dept li .meta{font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
 .empty{padding:44px 16px;text-align:center;color:var(--ink-3)}
-.empty strong{display:block;color:var(--ink-2);font-size:15px;margin-bottom:6px;font-family:var(--serif)}
+.empty strong{display:block;color:var(--navy-2);font-size:14px;font-weight:700;margin-bottom:6px}
 
 .legend{display:flex;flex-wrap:wrap;gap:13px;align-items:center;font-size:12px;color:var(--ink-2);padding:9px 14px;border-top:1px solid var(--line)}
 .legend .ph{display:inline-flex;align-items:center;gap:6px}
 .legend .sw{width:12px;height:12px;border-radius:2px}
-dialog{border:1px solid var(--line-2);border-radius:4px;background:var(--surface);color:var(--ink);padding:0;width:min(420px,calc(100vw - 32px));box-shadow:0 24px 60px -20px rgba(0,0,0,.5)}
+dialog{border:1px solid var(--navy);border-radius:2px;background:var(--surface);color:var(--ink);padding:0;width:min(420px,calc(100vw - 32px));box-shadow:0 24px 60px -20px rgba(0,0,0,.5)}
 dialog::backdrop{background:rgba(10,20,22,.55)}
-dialog header{padding:13px 16px;border-bottom:1px solid var(--line)}
-dialog h2{font-family:var(--serif);font-size:17px;font-weight:700}
+dialog header{padding:9px 14px;border-bottom:1px solid var(--line-2);background:var(--surface-2)}
+dialog h2{font-size:14px;font-weight:700;color:var(--navy-2)}
 dialog .body{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
 dialog .body label{font-size:11.5px;color:var(--ink-2);font-weight:600;display:block;margin-bottom:3px}
 dialog footer{padding:11px 16px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end}
 footer.page{color:var(--ink-3);font-size:12px;display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;border-top:1px solid var(--line);padding-top:11px}
-kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:3px;padding:0 4px}
+kbd{font-size:11px;border:1px solid var(--line-2);border-bottom-width:2px;border-radius:3px;padding:0 4px}
 
 @media (max-width:960px){
   .board{grid-template-columns:1fr}
@@ -218,19 +240,28 @@ kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line-2);border
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
+<div class="appbar">
+  <div class="appbar-in">
+    <div class="brand">
+      <span class="mk" aria-hidden="true"></span>
+      <span class="org" id="orgName">부산대학교</span>
+      <span class="sys">대학 통합 추진 일정관리</span>
+    </div>
+    <div class="appbar-r">
+      <span class="dt" id="todayStr"></span>
+      <button type="button" id="setTarget">설정</button>
+    </div>
+  </div>
+</div>
+<div class="greenline"></div>
+
 <div class="wrap">
   <header class="masthead">
     <div>
-      <p class="eyebrow">대학 통합 추진 협의체</p>
+      <p class="eyebrow">대학 통합 추진 협의체 · 부서별 추진과제</p>
       <h1 id="boardTitle">통합 추진 일정판</h1>
-      <p class="sub">빈 곳을 좌우로 끌면 그 기간에 과제가 생깁니다. 노드를 끌어 일정을 옮기고, 오른쪽 동그라미에서 다른 노드로 선을 이으면 선후관계가 걸립니다.</p>
     </div>
-    <div class="dday">
-      <div class="label">통합 개교 목표</div>
-      <div class="count" id="ddayCount">—</div>
-      <div class="date" id="ddayDate">목표일 미설정</div>
-      <button type="button" id="setTarget">목표일 변경</button>
-    </div>
+    <p class="sub">빈 곳을 좌우로 끌면 그 기간에 과제가 생깁니다. 노드를 끌어 일정을 옮기고, 오른쪽 동그라미에서 다른 노드로 선을 이으면 선후관계가 걸립니다.</p>
   </header>
 
   <section class="stats" id="stats" aria-label="추진 현황 요약"></section>
@@ -279,6 +310,7 @@ kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line-2);border
   <form method="dialog" id="targetForm">
     <header><h2>일정판 설정</h2></header>
     <div class="body">
+      <div><label for="f_org">기관명</label><input type="text" id="f_org" placeholder="예) 부산대학교"></div>
       <div><label for="f_boardTitle">일정판 제목</label><input type="text" id="f_boardTitle"></div>
       <div><label for="f_target">통합 개교 목표일</label><input type="date" id="f_target"></div>
     </div>
@@ -308,13 +340,13 @@ var BASE_DEPTS=["기획처","교무과","입학과","학사과","학생과","총
 /* 공유 저장에 연결하지 못한 화면에서도 일정판이 비지 않도록 하는 기본 일정.
    seed/tasks.json 에서 생성한다. */
 var FALLBACK=[{"id":"t01","phase":"p1","title":"통합 추진 기본합의서(MOU) 체결","dept":"기획처","coop":"대외협력과","owner":"통합추진단장","start":"2026-03-02","end":"2026-03-31","status":"done","deliverable":"기본합의서, 양교 서명본","note":"양교 총장 서명 완료 기준"},{"id":"t02","phase":"p1","title":"통합추진위원회·실무TF 구성","dept":"기획처","coop":"총무과","owner":"기획팀장","start":"2026-03-16","end":"2026-04-17","status":"done","deliverable":"위원 위촉장, TF 운영계획","note":"부서별 실무위원 1인 이상 지정"},{"id":"t03","phase":"p1","title":"구성원 의견수렴(설명회·설문)","dept":"대외협력과","coop":"학생과, 교무과","owner":"홍보팀장","start":"2026-04-01","end":"2026-06-30","status":"done","deliverable":"의견수렴 결과보고서","note":"교수회·직원노조·총학생회 각 1회 이상"},{"id":"t04","phase":"p2","title":"통합 신청서 및 이행계획서 작성","dept":"기획처","coop":"전 부서","owner":"기획팀장","start":"2026-06-01","end":"2026-09-30","status":"doing","deliverable":"교육부 제출 신청서","note":"부서별 분담자료 5.22까지 취합"},{"id":"t05","phase":"p2","title":"정원 조정 및 학과 통폐합 계획 수립","dept":"교무과","coop":"학사과, 입학과","owner":"교무팀장","start":"2026-06-15","end":"2026-10-30","status":"doing","deliverable":"학과 재배치(안), 정원 조정표","note":"중복학과 우선 검토 대상 확정 필요"},{"id":"t06","phase":"p2","title":"교육부 통합 승인 신청 접수","dept":"기획처","coop":"","owner":"통합추진단장","start":"2026-10-05","end":"2026-10-16","status":"todo","deliverable":"접수증","note":"제출 마감 엄수","deps":["t04"]},{"id":"t07","phase":"p3","title":"통합 대학 정관·학칙 제·개정","dept":"총무과","coop":"교무과, 학사과","owner":"법무담당","start":"2026-08-03","end":"2026-11-30","status":"todo","deliverable":"정관·학칙 개정안","note":"법인 이사회 및 대학평의원회 심의 필요"},{"id":"t08","phase":"p3","title":"제규정 일제 정비(인사·회계·복무)","dept":"총무과","coop":"재무과","owner":"인사팀장","start":"2026-09-01","end":"2027-01-29","status":"todo","deliverable":"규정 정비 대장","note":"양교 상이 규정 320여 건 대사 예정"},{"id":"t09","phase":"p3","title":"교직원 신분·처우 승계 방안 확정","dept":"총무과","coop":"재무과, 기획처","owner":"인사팀장","start":"2026-10-01","end":"2027-02-26","status":"todo","deliverable":"승계 기준안, 노사 합의문","note":"직급·호봉 대응표 선행"},{"id":"t10","phase":"p4","title":"통합 조직·기구 개편(안) 수립","dept":"기획처","coop":"총무과","owner":"조직담당","start":"2026-11-02","end":"2027-03-31","status":"todo","deliverable":"기구표, 정원표","note":"중복 부서 통합 원칙 우선 합의"},{"id":"t11","phase":"p4","title":"교육과정 통합 및 학점 인정 기준 마련","dept":"학사과","coop":"교무과","owner":"학사팀장","start":"2026-12-01","end":"2027-05-31","status":"todo","deliverable":"통합 교육과정표, 학점인정 기준","note":"재학생 불이익 금지 원칙 명시"},{"id":"t12","phase":"p4","title":"재학생 학적 이관·졸업요건 경과조치","dept":"학사과","coop":"교무과, 정보전산원","owner":"학적담당","start":"2027-01-04","end":"2027-06-30","status":"todo","deliverable":"학적 이관 계획, 경과조치 고시","note":"입학연도별 적용 기준 필요"},{"id":"t13","phase":"p4","title":"2028학년도 통합 모집단위·전형계획 수립","dept":"입학과","coop":"교무과, 학사과","owner":"입학팀장","start":"2027-02-01","end":"2027-04-30","status":"todo","deliverable":"전형시행계획","note":"대교협 사전예고 시한 준수(4년제 기준 1년 10개월 전)","deps":["n01"]},{"id":"t14","phase":"p4","title":"통합 대학 전형료·장학 제도 정비","dept":"입학과","coop":"재무과, 학생과","owner":"입학팀장","start":"2027-03-02","end":"2027-06-30","status":"todo","deliverable":"장학규정 개정안","note":"양교 장학금 종류 통합 정리"},{"id":"t15","phase":"p5","title":"학사행정시스템 통합 및 데이터 이관","dept":"정보전산원","coop":"학사과, 교무과, 입학과","owner":"전산팀장","start":"2027-01-04","end":"2027-10-29","status":"todo","deliverable":"통합 DB, 이관 검증보고서","note":"학적·성적·입시 데이터 3종 우선"},{"id":"t16","phase":"p5","title":"통합 포털·메일·인증체계 구축","dept":"정보전산원","coop":"대외협력과","owner":"인프라담당","start":"2027-04-01","end":"2027-11-30","status":"todo","deliverable":"통합 SSO, 신규 도메인","note":"기존 계정 병행 운영 기간 설정"},{"id":"t17","phase":"p5","title":"캠퍼스별 공간 재배치 및 시설 정비","dept":"시설과","coop":"총무과, 기획처","owner":"시설팀장","start":"2027-03-01","end":"2027-12-31","status":"todo","deliverable":"공간 재배치 계획","note":"강의실·실습실 수요조사 선행"},{"id":"t18","phase":"p5","title":"통합 예산 편성 및 회계 계정 일원화","dept":"재무과","coop":"기획처","owner":"예산담당","start":"2027-07-01","end":"2027-12-31","status":"todo","deliverable":"2028년도 통합 예산서","note":"법인 회계 통합 시점 확정 필요"},{"id":"t19","phase":"p6","title":"통합 대학 CI·명칭 확정 및 대외 고지","dept":"대외협력과","coop":"기획처","owner":"홍보팀장","start":"2027-06-01","end":"2027-09-30","status":"todo","deliverable":"CI 매뉴얼, 대외 공문","note":"교명 변경 인가와 연동"},{"id":"t20","phase":"p6","title":"통합 대학 개교 및 2028학년도 신입생 모집","dept":"입학과","coop":"교무과, 학사과, 학생과","owner":"입학팀장","start":"2028-01-03","end":"2028-03-02","status":"todo","deliverable":"개교식, 모집 결과보고","note":"통합 개교 목표일 기준"},{"id":"t21","phase":"p6","title":"통합 후 운영 점검 및 보완과제 이행","dept":"기획처","coop":"전 부서","owner":"기획팀장","start":"2028-03-02","end":"2028-08-31","status":"todo","deliverable":"이행점검 보고서","note":"교육부 이행실적 제출 대비"},{"id":"n01","phase":"p7","title":"통합 모집단위·전공 구조 확정","dept":"입학과","coop":"교무과, 기획처","owner":"입학팀장","start":"2026-11-02","end":"2027-01-29","status":"todo","deliverable":"모집단위 일람표(학부-학과-전공)","deps":["t05"],"note":"이후 코드 신설·교육과정·전형계획이 모두 이 구조를 참조한다. 학부제/학과제 여부와 전공 진입 시점(1학년 후 선택 등)을 함께 확정."},{"id":"n02","phase":"p7","title":"학과코드·전공코드 신설 및 구코드 매핑","dept":"교무과","coop":"정보전산원, 학사과, 입학과","owner":"교무팀장","start":"2027-02-01","end":"2027-04-30","status":"todo","deliverable":"신규 코드 체계표, 양교 구코드→신코드 매핑표","deps":["n01"],"note":"학적·성적·졸업·증명 전 영역이 이 코드를 참조하므로 재학생 소급 적용 범위를 먼저 확정할 것. 폐지 학과 코드는 삭제하지 말고 이력 보존."},{"id":"n03","phase":"p7","title":"전공 교육과정 편성 및 시스템 등록","dept":"학사과","coop":"교무과","owner":"학사팀장","start":"2027-05-03","end":"2027-09-30","status":"todo","deliverable":"전공별 교육과정표, 이수체계도","deps":["n02"],"note":"4단계 ‘교육과정 통합 및 학점 인정 기준’의 결과를 신규 코드에 얹는 작업. 폐지 교과목-신설 교과목 대체인정표 필수."},{"id":"n04","phase":"p7","title":"교양 영역 구분 및 교양선택 교육과정 편성","dept":"학사과","coop":"교무과","owner":"교양교육담당","start":"2027-05-03","end":"2027-09-30","status":"todo","deliverable":"교양 영역별 이수기준, 교양선택 교과목 목록","deps":["n02"],"note":"양교 교양 영역 명칭·최저이수학점이 달라 통합 기준 확정 후 입력. 재학생 적용 학번 기준을 명시."},{"id":"n05","phase":"p7","title":"개설강좌 등록 및 담당교원 배정","dept":"교무과","coop":"학사과","owner":"수업담당","start":"2027-10-01","end":"2027-12-15","status":"todo","deliverable":"2028-1학기 개설강좌 목록","deps":["n03","n04"],"note":"통합 전 양 캠퍼스 동일 교과목의 분반 통합 여부, 원격/공동 운영 여부를 함께 결정."},{"id":"n06","phase":"p7","title":"시간표 편성 및 강의실 배정","dept":"교무과","coop":"시설과, 정보전산원","owner":"수업담당","start":"2027-12-01","end":"2028-01-29","status":"todo","deliverable":"2028-1학기 시간표, 강의실 배정표","deps":["n05"],"note":"캠퍼스 간 이동 교시 확보가 관건. 개설강좌 확정 전 착수하도록 잡혀 있어 선후관계 조정 필요."}];
-var FALLBACK_META={title:"통합 추진 일정판",target:"2028-03-01"};
+var FALLBACK_META={org:"부산대학교",title:"통합 추진 일정판",target:"2028-03-01"};
 
 var DAY=86400000, NODE_H=46, ROW_GAP=12, BAND_GAP=26, PAD_TOP=18;
 var ZOOMS=[{k:"분기",ppd:1.15},{k:"월",ppd:2.6},{k:"주",ppd:6}];
 
-var db=null, local=false, usingFallback=false;
-var tasks=[], meta={title:"통합 추진 일정판",target:""};
+var db=null, local=false, usingFallback=false, backend="";
+var tasks=[], meta={org:"부산대학교",title:"통합 추진 일정판",target:""};
 var view="canvas", filterDepts=[], filterStatus="", query="";
 var zoom=1, selId=null, scrolledOnce=false;
 
@@ -341,10 +373,36 @@ function localSave(){
 }
 function note(msg){ var n=$("#syncNote"); if(!msg){n.hidden=true;return;} n.textContent=msg; n.hidden=false; }
 
+function loadScript(src){
+  return new Promise(function(res,rej){
+    var el=document.createElement("script"); el.src=src; el.async=true;
+    el.onload=res; el.onerror=function(){rej(new Error(src))}; document.head.appendChild(el);
+  });
+}
+/* firebase-config.js 로 설정을 넣어 두면 Firestore 를 공유 저장소로 쓴다.
+   Firestore compat API 는 collection/doc/onSnapshot 모양이 같아 아래 코드를 그대로 쓴다. */
+function tryFirebase(){
+  var cfg=window.FIREBASE_CONFIG;
+  if(!cfg||!cfg.projectId||/^여기에/.test(String(cfg.projectId)))return Promise.resolve(null);
+  var CDN="https://cdn.jsdelivr.net/npm/firebase@10.14.1/";
+  return loadScript(CDN+"firebase-app-compat.js")
+    .then(function(){ return loadScript(CDN+"firebase-firestore-compat.js"); })
+    .then(function(){
+      if(!window.firebase||!firebase.firestore)return null;
+      if(!firebase.apps.length)firebase.initializeApp(cfg);
+      backend="firebase"; return firebase.firestore();
+    })
+    .catch(function(){ return null; });
+}
+function storeLabel(){
+  if(backend==="firebase")return "Firebase 공유 저장";
+  if(!local)return "공유 저장";
+  return usingFallback?"기본 일정(내 브라우저)":"내 브라우저 저장";
+}
 function boot(){
   buildStaticUI(); render();
   var use=(window.claude&&window.claude.use)?window.claude.use("db"):Promise.resolve(null);
-  Promise.resolve(use).then(function(d){
+  Promise.resolve(use).then(function(d){ return d||tryFirebase(); }).then(function(d){
     if(!d){ local=true; localLoad(); note(offlineMsg()); render(); return; }
     db=d;
     db.collection("tasks").onSnapshot(function(snap){
@@ -356,19 +414,27 @@ function boot(){
       render();
     });
     db.doc("meta/board").onSnapshot(function(s){
-      if(s.exists){ var v=s.data()||{}; meta={title:v.title||meta.title,target:v.target||""}; render(); }
+      if(s.exists){ var v=s.data()||{}; meta={org:v.org||meta.org,title:v.title||meta.title,target:v.target||""}; render(); }
     }, function(){});
   });
 }
 function offlineMsg(){
-  return usingFallback
+  var how=" 여러 부서가 같이 고치려면 firebase-config.js 에 Firestore 설정을 넣거나, 공유 저장이 되는 링크로 여십시오.";
+  return (usingFallback
     ? "공유 저장에 연결하지 못해 기본 일정을 표시하고 있습니다. 여기서 고친 내용은 이 브라우저에만 남습니다."
-    : "공유 저장을 쓸 수 없어 이 브라우저에만 저장됩니다. 다른 참석자에게는 보이지 않습니다.";
+    : "공유 저장을 쓸 수 없어 이 브라우저에만 저장됩니다. 다른 참석자에게는 보이지 않습니다.")+how;
+}
+function cleanBody(t){
+  var b={}; Object.keys(t).forEach(function(k){
+    if(k==="id"||k.charAt(0)==="_")return;
+    if(t[k]===undefined)return;
+    b[k]=t[k];
+  }); return b;
 }
 function persist(t){
   t.updatedAt=new Date().toISOString();
   if(local||!db){ localSave(); render(); return Promise.resolve(); }
-  var body=clone(t); delete body.id;
+  var body=cleanBody(t);
   return db.collection("tasks").doc(t.id).set(body).catch(function(err){
     note(err&&err.code==="invalid_argument" ? "저장 권한이 없어 반영되지 않았습니다." : "저장에 실패했습니다.");
   });
@@ -378,7 +444,7 @@ function createTask(data){
   data.id=id; data.updatedAt=new Date().toISOString();
   tasks.push(data);
   if(local||!db){ localSave(); render(); return Promise.resolve(id); }
-  var body=clone(data); delete body.id;
+  var body=cleanBody(data);
   render();
   return db.collection("tasks").doc(id).set(body).then(function(){return id})
     .catch(function(){ note("저장에 실패했습니다."); return id; });
@@ -394,7 +460,7 @@ function removeTask(id){
 function saveMeta(m){
   meta=m;
   if(local||!db){ localSave(); render(); return Promise.resolve(); }
-  return db.doc("meta/board").set({title:m.title,target:m.target});
+  return db.doc("meta/board").set({org:m.org,title:m.title,target:m.target});
 }
 
 /* ---------- 파생 ---------- */
@@ -483,11 +549,13 @@ function buildStaticUI(){
   $("#csvBtn").addEventListener("click",exportCsv);
   $("#tidyBtn").addEventListener("click",tidy);
   $("#setTarget").addEventListener("click",function(){
-    $("#f_boardTitle").value=meta.title||""; $("#f_target").value=meta.target||""; $("#targetDlg").showModal();
+    $("#f_org").value=meta.org||""; $("#f_boardTitle").value=meta.title||"";
+    $("#f_target").value=meta.target||""; $("#targetDlg").showModal();
   });
   $("#tgCancel").addEventListener("click",function(){ $("#targetDlg").close(); });
   $("#targetForm").addEventListener("submit",function(){
-    saveMeta({title:$("#f_boardTitle").value.trim()||"통합 추진 일정판",target:$("#f_target").value});
+    saveMeta({org:$("#f_org").value.trim()||"부산대학교",
+              title:$("#f_boardTitle").value.trim()||"통합 추진 일정판",target:$("#f_target").value});
   });
   document.addEventListener("keydown",function(e){
     var tag=e.target.tagName;
@@ -518,7 +586,9 @@ function quickAdd(){
 /* ---------- 렌더 ---------- */
 function render(){
   $("#boardTitle").textContent=meta.title||"통합 추진 일정판";
-  renderDday(); renderStats(); renderChips();
+  $("#orgName").textContent=meta.org||"부산대학교";
+  $("#todayStr").textContent=stamp()+" 기준";
+  renderStats(); renderChips();
   var host=$("#viewHost"); host.textContent="";
   var list=visible();
   $("#panelTitle").textContent = view==="canvas"?"일정 캔버스":(view==="list"?"과제 목록":"부서별 분담");
@@ -531,30 +601,36 @@ function render(){
   if(view==="canvas")host.appendChild(renderCanvas(list));
   else if(view==="list")host.appendChild(renderTable(list));
   else host.appendChild(renderDepts(list));
-  var d=new Date();
-  $("#stamp").textContent="v"+BUILD+" · "+(local?(usingFallback?"기본 일정":"로컬 저장"):"공유 저장")
-    +" · "+d.getFullYear()+"."+String(d.getMonth()+1).padStart(2,"0")+"."+String(d.getDate()).padStart(2,"0")+" 기준";
+  $("#stamp").textContent="v"+BUILD+" · "+storeLabel();
 }
 function emptyBox(a,b){ var d=el("div","empty"); d.appendChild(el("strong",null,a)); d.appendChild(el("p",null,b)); return d; }
-function renderDday(){
-  var c=$("#ddayCount"), dt=$("#ddayDate"), t=pd(meta.target);
-  if(!t){ c.textContent="—"; dt.textContent="목표일 미설정"; return; }
+function stamp(){
+  var d=new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function ddayText(){
+  var t=pd(meta.target); if(!t)return {n:"—",c:"목표일 미설정"};
   var diff=Math.round((t-todayUTC())/DAY);
-  c.textContent=diff>0?("D-"+diff):(diff===0?"D-DAY":("D+"+Math.abs(diff)));
-  dt.textContent=fmt(meta.target);
+  return {n:diff>0?("D-"+diff):(diff===0?"D-DAY":("D+"+Math.abs(diff))), c:fmt(meta.target)+" 목표"};
 }
 function renderStats(){
   var box=$("#stats"); box.textContent="";
   var c={todo:0,doing:0,done:0,late:0,hold:0};
   tasks.forEach(function(t){ c[effStatus(t)]++ });
-  [{n:tasks.length,t:"전체 과제",cls:""},
-   {n:c.doing,t:"진행중",cls:"is-doing"},
-   {n:c.late,t:"기한 초과",cls:"is-late"},
-   {n:c.done,t:"완료",cls:"is-done"},
-   {n:tasks.filter(function(t){return depConflicts(t).length}).length,t:"선후관계 충돌",cls:"is-warnk"},
-   {n:activeDepts().length,t:"참여 부서",cls:""}
+  var dd=ddayText(), base=stamp()+" 기준";
+  [{t:"통합 개교까지",n:dd.n,c:dd.c,cls:"is-dday"},
+   {t:"전체 추진과제",n:tasks.length,c:base,cls:""},
+   {t:"진행중",n:c.doing,c:base,cls:"is-doing"},
+   {t:"기한 초과",n:c.late,c:base,cls:"is-late"},
+   {t:"완료",n:c.done,c:base,cls:"is-done"},
+   {t:"선후관계 충돌",n:tasks.filter(function(t){return depConflicts(t).length}).length,c:base,cls:"is-warnk"},
+   {t:"참여 부서",n:activeDepts().length,c:base,cls:""}
   ].forEach(function(i){
-    var s=el("div","stat "+i.cls); s.appendChild(el("div","n",String(i.n))); s.appendChild(el("div","t",i.t)); box.appendChild(s);
+    var d=el("div","stat "+i.cls);
+    d.appendChild(el("div","t",i.t));
+    d.appendChild(el("div","n",String(i.n)));
+    d.appendChild(el("div","c",i.c));
+    box.appendChild(d);
   });
 }
 function renderChips(){
