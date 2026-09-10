@@ -11,7 +11,7 @@
   --accent:#1668C1; --accent-ink:#0F4E96; --accent-soft:#E3EDF9; --on-accent:#ffffff;
   --todo:#6B7A8D; --doing:#B26A00; --done:#1E7A4A; --late:#C0392B; --hold:#6B5B95;
   --p1:#17458C; --p2:#1668C1; --p3:#0E7C86; --p4:#00834B; --p5:#7E7A1C; --p6:#B26A00; --p7:#B0392B;
-  --edge:#8494A8;
+  --edge:#8494A8; --band-tint:rgba(23,69,140,.05); --note-bg:#FFF3BF; --note-ink:#3A3212;
   --shadow:0 1px 2px rgba(23,69,140,.06);
   --sans:"Noto Sans KR","Malgun Gothic","맑은 고딕","Apple SD Gothic Neo",system-ui,sans-serif;
   --serif:var(--sans);
@@ -26,7 +26,7 @@
     --accent:#4E9BE8; --accent-ink:#8FC2F2; --accent-soft:#152A40; --on-accent:#07121D;
     --todo:#8B9AAC; --doing:#E0A54A; --done:#5BC48D; --late:#E8877C; --hold:#A99BD0;
     --p1:#4B85D6; --p2:#54A6EE; --p3:#3FAEB6; --p4:#3BB578; --p5:#B6B048; --p6:#DD9A45; --p7:#DE7566;
-    --edge:#66788C;
+    --edge:#66788C; --band-tint:rgba(255,255,255,.04); --note-bg:#4B4420; --note-ink:#F2E8C6;
     --shadow:0 1px 2px rgba(0,0,0,.4);
   }
 }
@@ -38,7 +38,7 @@
   --accent:#4E9BE8; --accent-ink:#8FC2F2; --accent-soft:#152A40; --on-accent:#07121D;
   --todo:#8B9AAC; --doing:#E0A54A; --done:#5BC48D; --late:#E8877C; --hold:#A99BD0;
   --p1:#4B85D6; --p2:#54A6EE; --p3:#3FAEB6; --p4:#3BB578; --p5:#B6B048; --p6:#DD9A45; --p7:#DE7566;
-  --edge:#66788C;
+  --edge:#66788C; --band-tint:rgba(255,255,255,.04); --note-bg:#4B4420; --note-ink:#F2E8C6;
   --shadow:0 1px 2px rgba(0,0,0,.4);
 }
 *{box-sizing:border-box}
@@ -122,7 +122,29 @@ input[type="search"]{min-width:150px}
 .ruler .mo:first-child{border-left:0}
 .ruler .mo .y{display:block;font-size:9.5px;color:var(--ink-3);letter-spacing:.06em}
 .surface{position:relative;touch-action:none;cursor:crosshair}
-.vgrid{position:absolute;inset:0;pointer-events:none}
+.sticky{position:absolute;width:196px;z-index:6;border:1px solid rgba(0,0,0,.16);border-radius:2px;
+  box-shadow:0 3px 11px -3px rgba(0,0,0,.35);transform:rotate(-.7deg);display:flex;flex-direction:column}
+.sticky.sel{outline:2px solid var(--ink);outline-offset:2px;z-index:9;transform:rotate(0deg)}
+.sticky .pin{position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:9px;height:9px;
+  border-radius:50%;background:rgba(0,0,0,.32);box-shadow:0 1px 2px rgba(0,0,0,.35)}
+.sticky .hd{display:flex;align-items:center;gap:2px;padding:3px 3px 3px 8px;cursor:grab;touch-action:none;
+  border-bottom:1px solid rgba(0,0,0,.12);font-size:10px;font-weight:700;letter-spacing:.04em;opacity:.75}
+.sticky .hd:active{cursor:grabbing}
+.sticky .hd .sp{flex:1}
+.sticky .hd button{border:0;background:none;cursor:pointer;font-size:12px;line-height:1;padding:2px 4px;
+  color:inherit;opacity:.65;border-radius:2px}
+.sticky .hd button:hover{opacity:1;background:rgba(0,0,0,.08)}
+.sticky .bd{padding:7px 9px 9px;font-size:12px;line-height:1.5;white-space:pre-wrap;word-break:break-word;
+  min-height:36px;cursor:text}
+.sticky .bd.ph{opacity:.55}
+.sticky textarea{font-family:inherit;font-size:12px;line-height:1.5;border:0;background:rgba(255,255,255,.45);
+  color:inherit;width:100%;padding:7px 9px;resize:none;outline:none;min-height:58px;border-radius:0 0 2px 2px}
+.band{position:absolute;left:0;pointer-events:none;z-index:1;border-top:1px solid var(--line)}
+.band.alt{background:var(--band-tint)}
+.band .bl{position:sticky;left:8px;display:inline-block;margin-top:-10px;white-space:nowrap;
+  font-size:11px;font-weight:700;color:var(--ink-2);background:var(--surface);
+  border:1px solid var(--line-2);border-left:3px solid var(--line-2);border-radius:2px;padding:1px 9px}
+.vgrid{position:absolute;inset:0;pointer-events:none;z-index:2}
 .vgrid i{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
 .vgrid i.q{background:var(--line-2)}
 .nowline{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed var(--late);pointer-events:none;z-index:4}
@@ -277,7 +299,7 @@ kbd{font-size:11px;border:1px solid var(--line-2);border-bottom-width:2px;border
       <p class="eyebrow">대학 통합 추진 협의체 · 부서별 추진과제</p>
       <h1 id="boardTitle">통합 추진 일정판</h1>
     </div>
-    <p class="sub">빈 곳을 좌우로 끌면 그 기간에 과제가 생깁니다. 노드를 끌어 일정을 옮기고, 오른쪽 동그라미에서 다른 노드로 선을 이으면 선후관계가 걸립니다.</p>
+    <p class="sub">부서별로 줄이 나뉩니다. 해당 부서 줄의 빈 곳을 좌우로 끌면 그 기간에 과제가 생기고, 노드를 끌어 일정을 옮기며, 오른쪽 동그라미에서 다른 노드로 선을 이으면 선후관계가 걸립니다.</p>
   </header>
 
   <section class="stats" id="stats" aria-label="추진 현황 요약"></section>
@@ -297,6 +319,7 @@ kbd{font-size:11px;border:1px solid var(--line-2);border-bottom-width:2px;border
         <option value="done">완료</option><option value="late">지연</option><option value="hold">보류</option>
       </select>
       <button type="button" class="btn ghost" id="csvBtn">CSV</button>
+      <button type="button" class="btn ghost" id="noteBtn">이슈 메모</button>
       <button type="button" class="btn" id="addBtn">일정 추가</button>
     </div>
   </div>
@@ -309,7 +332,7 @@ kbd{font-size:11px;border:1px solid var(--line-2);border-bottom-width:2px;border
       <div class="tools">
         <span class="hint" id="panelHint"></span>
         <span class="zoom" id="zoomBox" role="group" aria-label="기간 배율"></span>
-        <button type="button" class="btn ghost" id="tidyBtn">자동 정렬</button>
+        <button type="button" class="btn ghost" id="tidyBtn">부서별 정렬</button>
       </div>
     </div>
     <div id="viewHost"></div>
@@ -317,7 +340,7 @@ kbd{font-size:11px;border:1px solid var(--line-2);border-bottom-width:2px;border
   </section>
 
   <footer class="page">
-    <span>노드 선택 후 <kbd>Delete</kbd> 삭제 · <kbd>Esc</kbd> 선택 해제 · 선을 클릭하면 선후관계가 끊깁니다</span>
+    <span>노드 선택 후 <kbd>Delete</kbd> 삭제 · <kbd>Esc</kbd> 선택 해제 · 선을 클릭하면 선후관계가 끊깁니다 · 아래 범례에서 부서 색을 바꿉니다</span>
     <span id="stamp"></span>
   </footer>
 </div>
@@ -341,29 +364,21 @@ kbd{font-size:11px;border:1px solid var(--line-2);border-bottom-width:2px;border
 (function(){
 "use strict";
 var BUILD="4";
-var PHASES=[
- {id:"p1",name:"1단계 · 통합 합의",short:"통합 합의"},
- {id:"p2",name:"2단계 · 통합 신청",short:"통합 신청"},
- {id:"p3",name:"3단계 · 법규 정비",short:"법규 정비"},
- {id:"p4",name:"4단계 · 학사·조직 설계",short:"학사·조직 설계"},
- {id:"p5",name:"5단계 · 시스템·인프라",short:"시스템·인프라"},
- {id:"p7",name:"6단계 · 학사 개시 준비",short:"학사 개시 준비"},
- {id:"p6",name:"7단계 · 개교·안정화",short:"개교·안정화"}
-];
 var STATUS={todo:"예정",doing:"진행중",done:"완료",late:"지연",hold:"보류"};
 var BASE_DEPTS=["기획처","교무과","입학과","학사과","학생과","총무과","재무과","시설과","정보전산원","대외협력과","산학협력단","도서관"];
 
 /* 공유 저장에 연결하지 못한 화면에서도 일정판이 비지 않도록 하는 기본 일정.
    seed/tasks.json 에서 생성한다. */
 var FALLBACK=[{"id":"t01","phase":"p1","title":"통합 추진 기본합의서(MOU) 체결","dept":"기획처","coop":"대외협력과","owner":"통합추진단장","start":"2026-03-02","end":"2026-03-31","status":"done","deliverable":"기본합의서, 양교 서명본","note":"양교 총장 서명 완료 기준"},{"id":"t02","phase":"p1","title":"통합추진위원회·실무TF 구성","dept":"기획처","coop":"총무과","owner":"기획팀장","start":"2026-03-16","end":"2026-04-17","status":"done","deliverable":"위원 위촉장, TF 운영계획","note":"부서별 실무위원 1인 이상 지정"},{"id":"t03","phase":"p1","title":"구성원 의견수렴(설명회·설문)","dept":"대외협력과","coop":"학생과, 교무과","owner":"홍보팀장","start":"2026-04-01","end":"2026-06-30","status":"done","deliverable":"의견수렴 결과보고서","note":"교수회·직원노조·총학생회 각 1회 이상"},{"id":"t04","phase":"p2","title":"통합 신청서 및 이행계획서 작성","dept":"기획처","coop":"전 부서","owner":"기획팀장","start":"2026-06-01","end":"2026-09-30","status":"doing","deliverable":"교육부 제출 신청서","note":"부서별 분담자료 5.22까지 취합"},{"id":"t05","phase":"p2","title":"정원 조정 및 학과 통폐합 계획 수립","dept":"교무과","coop":"학사과, 입학과","owner":"교무팀장","start":"2026-06-15","end":"2026-10-30","status":"doing","deliverable":"학과 재배치(안), 정원 조정표","note":"중복학과 우선 검토 대상 확정 필요"},{"id":"t06","phase":"p2","title":"교육부 통합 승인 신청 접수","dept":"기획처","coop":"","owner":"통합추진단장","start":"2026-10-05","end":"2026-10-16","status":"todo","deliverable":"접수증","note":"제출 마감 엄수","deps":["t04"]},{"id":"t07","phase":"p3","title":"통합 대학 정관·학칙 제·개정","dept":"총무과","coop":"교무과, 학사과","owner":"법무담당","start":"2026-08-03","end":"2026-11-30","status":"todo","deliverable":"정관·학칙 개정안","note":"법인 이사회 및 대학평의원회 심의 필요"},{"id":"t08","phase":"p3","title":"제규정 일제 정비(인사·회계·복무)","dept":"총무과","coop":"재무과","owner":"인사팀장","start":"2026-09-01","end":"2027-01-29","status":"todo","deliverable":"규정 정비 대장","note":"양교 상이 규정 320여 건 대사 예정"},{"id":"t09","phase":"p3","title":"교직원 신분·처우 승계 방안 확정","dept":"총무과","coop":"재무과, 기획처","owner":"인사팀장","start":"2026-10-01","end":"2027-02-26","status":"todo","deliverable":"승계 기준안, 노사 합의문","note":"직급·호봉 대응표 선행"},{"id":"t10","phase":"p4","title":"통합 조직·기구 개편(안) 수립","dept":"기획처","coop":"총무과","owner":"조직담당","start":"2026-11-02","end":"2027-03-31","status":"todo","deliverable":"기구표, 정원표","note":"중복 부서 통합 원칙 우선 합의"},{"id":"t11","phase":"p4","title":"교육과정 통합 및 학점 인정 기준 마련","dept":"학사과","coop":"교무과","owner":"학사팀장","start":"2026-12-01","end":"2027-05-31","status":"todo","deliverable":"통합 교육과정표, 학점인정 기준","note":"재학생 불이익 금지 원칙 명시"},{"id":"t12","phase":"p4","title":"재학생 학적 이관·졸업요건 경과조치","dept":"학사과","coop":"교무과, 정보전산원","owner":"학적담당","start":"2027-01-04","end":"2027-06-30","status":"todo","deliverable":"학적 이관 계획, 경과조치 고시","note":"입학연도별 적용 기준 필요"},{"id":"t13","phase":"p4","title":"2028학년도 통합 모집단위·전형계획 수립","dept":"입학과","coop":"교무과, 학사과","owner":"입학팀장","start":"2027-02-01","end":"2027-04-30","status":"todo","deliverable":"전형시행계획","note":"대교협 사전예고 시한 준수(4년제 기준 1년 10개월 전)","deps":["n01"]},{"id":"t14","phase":"p4","title":"통합 대학 전형료·장학 제도 정비","dept":"입학과","coop":"재무과, 학생과","owner":"입학팀장","start":"2027-03-02","end":"2027-06-30","status":"todo","deliverable":"장학규정 개정안","note":"양교 장학금 종류 통합 정리"},{"id":"t15","phase":"p5","title":"학사행정시스템 통합 및 데이터 이관","dept":"정보전산원","coop":"학사과, 교무과, 입학과","owner":"전산팀장","start":"2027-01-04","end":"2027-10-29","status":"todo","deliverable":"통합 DB, 이관 검증보고서","note":"학적·성적·입시 데이터 3종 우선"},{"id":"t16","phase":"p5","title":"통합 포털·메일·인증체계 구축","dept":"정보전산원","coop":"대외협력과","owner":"인프라담당","start":"2027-04-01","end":"2027-11-30","status":"todo","deliverable":"통합 SSO, 신규 도메인","note":"기존 계정 병행 운영 기간 설정"},{"id":"t17","phase":"p5","title":"캠퍼스별 공간 재배치 및 시설 정비","dept":"시설과","coop":"총무과, 기획처","owner":"시설팀장","start":"2027-03-01","end":"2027-12-31","status":"todo","deliverable":"공간 재배치 계획","note":"강의실·실습실 수요조사 선행"},{"id":"t18","phase":"p5","title":"통합 예산 편성 및 회계 계정 일원화","dept":"재무과","coop":"기획처","owner":"예산담당","start":"2027-07-01","end":"2027-12-31","status":"todo","deliverable":"2028년도 통합 예산서","note":"법인 회계 통합 시점 확정 필요"},{"id":"t19","phase":"p6","title":"통합 대학 CI·명칭 확정 및 대외 고지","dept":"대외협력과","coop":"기획처","owner":"홍보팀장","start":"2027-06-01","end":"2027-09-30","status":"todo","deliverable":"CI 매뉴얼, 대외 공문","note":"교명 변경 인가와 연동"},{"id":"t20","phase":"p6","title":"통합 대학 개교 및 2028학년도 신입생 모집","dept":"입학과","coop":"교무과, 학사과, 학생과","owner":"입학팀장","start":"2028-01-03","end":"2028-03-02","status":"todo","deliverable":"개교식, 모집 결과보고","note":"통합 개교 목표일 기준"},{"id":"t21","phase":"p6","title":"통합 후 운영 점검 및 보완과제 이행","dept":"기획처","coop":"전 부서","owner":"기획팀장","start":"2028-03-02","end":"2028-08-31","status":"todo","deliverable":"이행점검 보고서","note":"교육부 이행실적 제출 대비"},{"id":"n01","phase":"p7","title":"통합 모집단위·전공 구조 확정","dept":"입학과","coop":"교무과, 기획처","owner":"입학팀장","start":"2026-11-02","end":"2027-01-29","status":"todo","deliverable":"모집단위 일람표(학부-학과-전공)","deps":["t05"],"note":"이후 코드 신설·교육과정·전형계획이 모두 이 구조를 참조한다. 학부제/학과제 여부와 전공 진입 시점(1학년 후 선택 등)을 함께 확정."},{"id":"n02","phase":"p7","title":"학과코드·전공코드 신설 및 구코드 매핑","dept":"교무과","coop":"정보전산원, 학사과, 입학과","owner":"교무팀장","start":"2027-02-01","end":"2027-04-30","status":"todo","deliverable":"신규 코드 체계표, 양교 구코드→신코드 매핑표","deps":["n01"],"note":"학적·성적·졸업·증명 전 영역이 이 코드를 참조하므로 재학생 소급 적용 범위를 먼저 확정할 것. 폐지 학과 코드는 삭제하지 말고 이력 보존."},{"id":"n03","phase":"p7","title":"전공 교육과정 편성 및 시스템 등록","dept":"학사과","coop":"교무과","owner":"학사팀장","start":"2027-05-03","end":"2027-09-30","status":"todo","deliverable":"전공별 교육과정표, 이수체계도","deps":["n02"],"note":"4단계 ‘교육과정 통합 및 학점 인정 기준’의 결과를 신규 코드에 얹는 작업. 폐지 교과목-신설 교과목 대체인정표 필수."},{"id":"n04","phase":"p7","title":"교양 영역 구분 및 교양선택 교육과정 편성","dept":"학사과","coop":"교무과","owner":"교양교육담당","start":"2027-05-03","end":"2027-09-30","status":"todo","deliverable":"교양 영역별 이수기준, 교양선택 교과목 목록","deps":["n02"],"note":"양교 교양 영역 명칭·최저이수학점이 달라 통합 기준 확정 후 입력. 재학생 적용 학번 기준을 명시."},{"id":"n05","phase":"p7","title":"개설강좌 등록 및 담당교원 배정","dept":"교무과","coop":"학사과","owner":"수업담당","start":"2027-10-01","end":"2027-12-15","status":"todo","deliverable":"2028-1학기 개설강좌 목록","deps":["n03","n04"],"note":"통합 전 양 캠퍼스 동일 교과목의 분반 통합 여부, 원격/공동 운영 여부를 함께 결정."},{"id":"n06","phase":"p7","title":"시간표 편성 및 강의실 배정","dept":"교무과","coop":"시설과, 정보전산원","owner":"수업담당","start":"2027-12-01","end":"2028-01-29","status":"todo","deliverable":"2028-1학기 시간표, 강의실 배정표","deps":["n05"],"note":"캠퍼스 간 이동 교시 확보가 관건. 개설강좌 확정 전 착수하도록 잡혀 있어 선후관계 조정 필요."}];
-var FALLBACK_META={org:"부산대학교",title:"통합 추진 일정판",target:"2028-03-01",phaseColors:{}};
+var FALLBACK_META={org:"부산대학교",title:"통합 추진 일정판",target:"2028-03-01",deptColors:{}};
 
 var DAY=86400000, NODE_H=46, ROW_GAP=12, BAND_GAP=26, PAD_TOP=18;
 var ZOOMS=[{k:"분기",ppd:1.15},{k:"월",ppd:2.6},{k:"주",ppd:6}];
 
 var db=null, local=false, usingFallback=false, backend="";
-var tasks=[], meta={org:"부산대학교",title:"통합 추진 일정판",target:"",phaseColors:{}};
+var tasks=[], meta={org:"부산대학교",title:"통합 추진 일정판",target:"",deptColors:{}};
 var view="canvas", filterDepts=[], filterStatus="", query="";
+var notes=[], selNote=null, CANVAS=null;
 var zoom=1, selId=null, scrolledOnce=false;
 
 var $=function(s){return document.querySelector(s)};
@@ -382,10 +397,12 @@ function localLoad(){
     tasks=JSON.parse(localStorage.getItem("um.tasks")||"[]");
     var m=JSON.parse(localStorage.getItem("um.meta")||"null"); if(m)meta=m;
   }catch(e){ tasks=[]; }
+  try{ notes=JSON.parse(localStorage.getItem("um.notes")||"[]"); }catch(e){ notes=[]; }
   if(!tasks.length){ tasks=clone(FALLBACK); meta=clone(FALLBACK_META); usingFallback=true; }
 }
 function localSave(){
-  try{ localStorage.setItem("um.tasks",JSON.stringify(tasks)); localStorage.setItem("um.meta",JSON.stringify(meta)); }catch(e){}
+  try{ localStorage.setItem("um.tasks",JSON.stringify(tasks)); localStorage.setItem("um.meta",JSON.stringify(meta));
+       localStorage.setItem("um.notes",JSON.stringify(notes)); }catch(e){}
 }
 function note(msg){ var n=$("#syncNote"); if(!msg){n.hidden=true;return;} n.textContent=msg; n.hidden=false; }
 
@@ -445,8 +462,12 @@ function boot(){
       else note(offlineMsg());
       render();
     });
+    db.collection("notes").onSnapshot(function(snap){
+      notes=snap.docs.map(function(s){ var o=s.data()||{}; o.id=s.id; return o; });
+      render();
+    }, function(){});
     db.doc("meta/board").onSnapshot(function(s){
-      if(s.exists){ var v=s.data()||{}; meta={org:v.org||meta.org,title:v.title||meta.title,target:v.target||"",phaseColors:v.phaseColors||{}}; render(); }
+      if(s.exists){ var v=s.data()||{}; meta={org:v.org||meta.org,title:v.title||meta.title,target:v.target||"",deptColors:v.deptColors||{}}; render(); }
     }, function(){});
   });
 }
@@ -481,6 +502,28 @@ function createTask(data){
   return db.collection("tasks").doc(id).set(body).then(function(){return id})
     .catch(function(){ note("저장에 실패했습니다."); return id; });
 }
+function noteById(id){ for(var i=0;i<notes.length;i++) if(notes[i].id===id) return notes[i]; return null; }
+function persistNote(n){
+  n.updatedAt=new Date().toISOString();
+  if(local||!db){ localSave(); render(); return Promise.resolve(); }
+  return db.collection("notes").doc(n.id).set(cleanBody(n)).catch(function(){ note("메모를 저장하지 못했습니다."); });
+}
+function createNote(data){
+  data.id="n"+Date.now().toString(36)+Math.floor(Math.random()*900+100);
+  data.updatedAt=new Date().toISOString();
+  notes.push(data);
+  if(local||!db){ localSave(); render(); return Promise.resolve(data.id); }
+  render();
+  return db.collection("notes").doc(data.id).set(cleanBody(data)).then(function(){return data.id})
+    .catch(function(){ note("메모를 저장하지 못했습니다."); return data.id; });
+}
+function removeNote(id){
+  notes=notes.filter(function(n){return n.id!==id});
+  if(selNote===id)selNote=null;
+  if(local||!db){ localSave(); render(); return Promise.resolve(); }
+  render();
+  return db.collection("notes").doc(id).delete().catch(function(){ note("메모를 지우지 못했습니다."); });
+}
 function removeTask(id){
   tasks=tasks.filter(function(t){return t.id!==id});
   tasks.forEach(function(t){ if(t.deps&&t.deps.indexOf(id)>=0){ t.deps=t.deps.filter(function(x){return x!==id}); persist(t); } });
@@ -492,7 +535,7 @@ function removeTask(id){
 function saveMeta(m){
   meta=m;
   if(local||!db){ localSave(); render(); return Promise.resolve(); }
-  return db.doc("meta/board").set({org:m.org,title:m.title,target:m.target,phaseColors:m.phaseColors||{}});
+  return db.doc("meta/board").set({org:m.org,title:m.title,target:m.target,deptColors:m.deptColors||{}});
 }
 
 /* ---------- 파생 ---------- */
@@ -530,12 +573,13 @@ function closePalette(){
 function paletteOutside(e){ if(!e.target.closest||!e.target.closest(".palette"))closePalette(); }
 function paletteEsc(e){ if(e.key==="Escape"){ e.stopPropagation(); closePalette(); } }
 /* anchor 아래에 색 고르개를 띄운다. onPick(hex) / onReset() */
-function openPalette(anchor,title,current,onPick,onReset){
+var NOTE_SWATCHES=["#FFF3BF","#FFE1C2","#FFD9DE","#EADFF7","#D8ECFF","#CFF0EA","#DDF3D5","#E8E4DC"];
+function openPalette(anchor,title,current,onPick,onReset,swatches){
   closePalette();
   var box=el("div","palette");
   box.appendChild(el("div","ttl",title));
   var grid=el("div","grid");
-  SWATCHES.forEach(function(c){
+  (swatches||SWATCHES).forEach(function(c){
     var b=el("button"); b.type="button"; b.style.background=c; b.title=c;
     b.setAttribute("aria-label",c);
     b.setAttribute("aria-pressed",String(String(current).toLowerCase()===c.toLowerCase()));
@@ -564,13 +608,37 @@ function openPalette(anchor,title,current,onPick,onReset){
     document.addEventListener("keydown",paletteEsc,true);
   },0);
 }
-function phaseIdx(id){ var i=PHASES.findIndex(function(p){return p.id===id}); return i<0?PHASES.length:i; }
-function phaseColor(id){ var i=phaseIdx(id); return "var(--p"+(Math.min(i,PHASES.length-1)+1)+")"; }
-function effPhaseColor(id){
-  var m=meta.phaseColors&&meta.phaseColors[id];
-  return isHex(m)?m:phaseColor(id);
+var DEPT_PALETTE=["#17458C","#1668C1","#0E7C86","#00834B","#7E7A1C","#B26A00",
+                  "#B0392B","#6B5B95","#245F9E","#0B6E4F","#8C5A2B","#4A4E69"];
+var NO_DEPT="부서 미정";
+function deptKey(t){ return (t&&t.dept)?t.dept:NO_DEPT; }
+/* 부서 색은 이름순 자리로 정한다. 해시는 서로 비슷한 색이 겹치기 쉬워
+   기획처와 총무과가 같은 초록으로 나오는 일이 생긴다. */
+function allTaskDepts(){
+  var seen={}; tasks.forEach(function(t){ seen[deptKey(t)]=1 });
+  return Object.keys(seen).filter(function(d){return d!==NO_DEPT}).sort(function(a,b){return a.localeCompare(b,"ko")});
 }
-function nodeColor(t){ return isHex(t.color)?t.color:effPhaseColor(t.phase); }
+function deptColor(name){
+  var m=meta.deptColors&&meta.deptColors[name];
+  if(isHex(m))return m;
+  if(name===NO_DEPT)return "#8290A3";
+  var i=allTaskDepts().indexOf(name);
+  if(i<0)return "#8290A3";
+  return DEPT_PALETTE[i%DEPT_PALETTE.length];
+}
+function nodeColor(t){ return isHex(t.color)?t.color:deptColor(deptKey(t)); }
+/* 캔버스에 세로로 쌓을 부서 순서 — 착수가 이른 부서부터. */
+function deptOrder(list){
+  var first={};
+  list.forEach(function(t){
+    var k=deptKey(t), st=t.start||"9999";
+    if(first[k]===undefined||st<first[k])first[k]=st;
+  });
+  return Object.keys(first).sort(function(a,b){
+    if(a===NO_DEPT)return 1; if(b===NO_DEPT)return -1;
+    return String(first[a]).localeCompare(String(first[b]))||a.localeCompare(b,"ko");
+  });
+}
 function allDepts(){ var s={}; BASE_DEPTS.forEach(function(d){s[d]=1}); tasks.forEach(function(t){if(t.dept)s[t.dept]=1}); return Object.keys(s); }
 function activeDepts(){
   var s={}; tasks.forEach(function(t){ if(t.dept)s[t.dept]=(s[t.dept]||0)+1 });
@@ -584,7 +652,8 @@ function visible(){
     if(q&&[t.title,t.dept,t.owner,t.coop,t.deliverable,t.note].join(" ").toLowerCase().indexOf(q)<0)return false;
     return true;
   }).sort(function(a,b){
-    return phaseIdx(a.phase)-phaseIdx(b.phase) || String(a.start||"").localeCompare(String(b.start||""));
+    return String(a.start||"").localeCompare(String(b.start||"")) ||
+           deptKey(a).localeCompare(deptKey(b),"ko");
   });
 }
 
@@ -592,8 +661,8 @@ function visible(){
 function layout(list,ppd){
   var LABEL_PX=178;
   var bands={}, y=PAD_TOP;
-  PHASES.forEach(function(p){
-    var rows=list.filter(function(t){return t.phase===p.id})
+  deptOrder(list).forEach(function(dk){
+    var rows=list.filter(function(t){return deptKey(t)===dk})
       .sort(function(a,b){return String(a.start||"").localeCompare(String(b.start||""))});
     if(!rows.length)return;
     var lanes=[];
@@ -607,10 +676,9 @@ function layout(list,ppd){
       lanes[i]=occ;
       t._y=y+i*(NODE_H+ROW_GAP);
     });
-    bands[p.id]={top:y,rows:lanes.length};
+    bands[dk]={top:y,bottom:y+lanes.length*(NODE_H+ROW_GAP),rows:lanes.length};
     y+=lanes.length*(NODE_H+ROW_GAP)+BAND_GAP;
   });
-  list.filter(function(t){return phaseIdx(t.phase)>=PHASES.length}).forEach(function(t,i){ t._y=y+i*(NODE_H+ROW_GAP); });
   return bands;
 }
 
@@ -631,6 +699,7 @@ function buildStaticUI(){
   $("#q").addEventListener("input",function(e){ query=e.target.value; render(); });
   $("#fStatus").addEventListener("change",function(e){ filterStatus=e.target.value; render(); });
   $("#addBtn").addEventListener("click",quickAdd);
+  $("#noteBtn").addEventListener("click",addNote);
   $("#csvBtn").addEventListener("click",exportCsv);
   $("#tidyBtn").addEventListener("click",tidy);
   $("#setTarget").addEventListener("click",function(){
@@ -641,7 +710,7 @@ function buildStaticUI(){
   $("#targetForm").addEventListener("submit",function(){
     saveMeta({org:$("#f_org").value.trim()||"부산대학교",
               title:$("#f_boardTitle").value.trim()||"통합 추진 일정판",
-              target:$("#f_target").value, phaseColors:meta.phaseColors||{}});
+              target:$("#f_target").value, deptColors:meta.deptColors||{}});
   });
   document.addEventListener("keydown",function(e){
     var tag=e.target.tagName;
@@ -660,9 +729,24 @@ function tidy(){
   tasks.forEach(function(t){ if(t._y!=null){ t.y=t._y; persist(t); } });
   render();
 }
+/* 지금 보고 있는 화면 한가운데에 메모를 붙인다. */
+function addNote(){
+  var d=todayUTC(), y=120;
+  if(CANVAS&&CANVAS.scroller){
+    var sc=CANVAS.scroller;
+    d=CANVAS.dateAt(sc.scrollLeft+sc.clientWidth/2-98);
+    y=Math.max(8,sc.scrollTop+Math.min(90,sc.clientHeight/2-60));
+  }
+  view="canvas";
+  document.querySelectorAll(".tabs button").forEach(function(o){o.setAttribute("aria-selected",String(o.dataset.view==="canvas"))});
+  createNote({text:"",date:ds(d),y:Math.round(y/8)*8,color:""}).then(function(id){
+    selNote=id; render();
+    var el2=document.querySelector('.sticky[data-id="'+id+'"] .bd'); if(el2)el2.click();
+  });
+}
 function quickAdd(){
   var s=todayUTC(), e=new Date(s.getTime()+13*DAY);
-  createTask({title:"새 과제",phase:PHASES[0].id,dept:"",owner:"",start:ds(s),end:ds(e),
+  createTask({title:"새 과제",dept:"",owner:"",start:ds(s),end:ds(e),
     status:"todo",coop:"",deliverable:"",note:"",deps:[]}).then(function(id){
       selId=id; view="canvas"; render();
       var i=document.querySelector(".insp #i_title"); if(i){ i.focus(); i.select(); }
@@ -691,19 +775,20 @@ function render(){
 }
 function renderLegend(){
   var lg=$("#legend"); lg.textContent="";
-  PHASES.forEach(function(p){
-    var b=el("button","ph"); b.type="button";
-    b.title=p.name+" 색 바꾸기";
-    var sw=el("span","sw"); sw.style.background=effPhaseColor(p.id);
-    b.appendChild(sw); b.appendChild(el("span",null,p.short));
+  var order=deptOrder(visible());
+  if(!order.length){ lg.appendChild(el("span","tip","과제를 등록하면 부서별 색이 여기 표시됩니다")); return; }
+  order.forEach(function(dk){
+    var b=el("button","ph"); b.type="button"; b.title=dk+" 색 바꾸기";
+    var sw=el("span","sw"); sw.style.background=deptColor(dk);
+    b.appendChild(sw); b.appendChild(el("span",null,dk));
     b.addEventListener("click",function(){
-      openPalette(b,p.name+" 색",meta.phaseColors&&meta.phaseColors[p.id],
-        function(c){ meta.phaseColors=meta.phaseColors||{}; meta.phaseColors[p.id]=c; saveMeta(meta); render(); },
-        function(){ if(meta.phaseColors)delete meta.phaseColors[p.id]; saveMeta(meta); render(); });
+      openPalette(b,dk+" 색",meta.deptColors&&meta.deptColors[dk],
+        function(c){ meta.deptColors=meta.deptColors||{}; meta.deptColors[dk]=c; saveMeta(meta); render(); },
+        (meta.deptColors&&meta.deptColors[dk])?function(){ delete meta.deptColors[dk]; saveMeta(meta); render(); }:null);
     });
     lg.appendChild(b);
   });
-  lg.appendChild(el("span","tip","단계를 누르면 그 색을 바꿉니다"));
+  lg.appendChild(el("span","tip","부서를 누르면 그 색을 바꿉니다"));
 }
 function emptyBox(a,b){
   var d=el("div","empty"); d.appendChild(el("strong",null,a)); d.appendChild(el("p",null,b));
@@ -723,7 +808,7 @@ function seedButton(){
       return db.collection("tasks").doc(id).set(o);
     })).then(function(){
       return db.doc("meta/board").set({org:FALLBACK_META.org,title:FALLBACK_META.title,
-        target:FALLBACK_META.target,phaseColors:{}});
+        target:FALLBACK_META.target,deptColors:{}});
     }).then(function(){ note(""); }).catch(function(e){
       b.disabled=false; b.textContent="다시 시도";
       note("기본 일정을 넣지 못했습니다"+(e&&e.code?" ("+e.code+")":"")+". Firestore 규칙에서 쓰기가 열려 있는지 확인해 주십시오.");
@@ -798,9 +883,10 @@ function renderCanvas(list){
   var dateAt=function(px){ return new Date(R0.getTime()+Math.round(px/ppd)*DAY); };
   var snap=function(d){ var k=Math.round((d-R0)/DAY/7)*7; return new Date(R0.getTime()+k*DAY); };
 
-  layout(list,ppd);
+  var bands=layout(list,ppd);
   var H=PAD_TOP;
   list.forEach(function(t){ var y=(t.y!=null?t.y:t._y)||0; if(y+NODE_H>H)H=y+NODE_H; });
+  notes.forEach(function(nt){ var y=(nt.y!=null?nt.y:100)+120; if(y>H)H=y; });
   H+=140;
 
   var board=el("div","board");
@@ -853,6 +939,17 @@ function renderCanvas(list){
     if(sb){ sb.style.pointerEvents="auto"; hint.appendChild(document.createElement("br")); hint.appendChild(sb); }
     surf.appendChild(hint);
   }
+
+  /* 부서 구역 */
+  Object.keys(bands).forEach(function(dk,i){
+    var bd=bands[dk], band=el("div","band"+(i%2?" alt":""));
+    band.style.top=(bd.top-9)+"px";
+    band.style.height=(bd.bottom-bd.top+6)+"px";
+    band.style.width=W+"px";
+    var lb=el("span","bl",dk); lb.style.borderLeftColor=deptColor(dk);
+    band.appendChild(lb);
+    surf.insertBefore(band,svg);
+  });
 
   /* 노드 */
   var nodeOf={};
@@ -910,6 +1007,55 @@ function renderCanvas(list){
     });
   });
 
+  /* 이슈 메모 스티커 */
+  notes.forEach(function(nt){
+    var d=pd(nt.date)||todayUTC();
+    var st=el("div","sticky"+(selNote===nt.id?" sel":""));
+    st.dataset.id=nt.id;
+    st.style.left=x(d)+"px"; st.style.top=((nt.y!=null?nt.y:100))+"px";
+    var bg=isHex(nt.color)?nt.color:"var(--note-bg)";
+    st.style.background=bg;
+    st.style.color=isHex(nt.color)?textOn(nt.color):"var(--note-ink)";
+    st.appendChild(el("span","pin"));
+
+    var hd=el("div","hd");
+    hd.appendChild(el("span",null,"이슈"));
+    hd.appendChild(el("span","sp",""));
+    var cbtn=el("button",null,"◧"); cbtn.type="button"; cbtn.title="색 바꾸기";
+    cbtn.addEventListener("pointerdown",function(ev){
+      ev.stopPropagation();
+      openPalette(cbtn,"메모 색",nt.color,
+        function(c){ nt.color=c; persistNote(nt); },
+        isHex(nt.color)?function(){ delete nt.color; persistNote(nt); }:null,
+        NOTE_SWATCHES);
+    });
+    var xbtn=el("button",null,"×"); xbtn.type="button"; xbtn.title="메모 지우기";
+    xbtn.addEventListener("pointerdown",function(ev){
+      ev.stopPropagation();
+      if(!nt.text || confirm("이 메모를 지웁니다."))removeNote(nt.id);
+    });
+    hd.appendChild(cbtn); hd.appendChild(xbtn);
+    st.appendChild(hd);
+
+    var bd=el("div","bd"+(nt.text?"":" ph"),nt.text||"내용을 적으세요");
+    bd.addEventListener("click",function(ev){
+      if(ev.target.closest(".hd"))return;
+      var ta=document.createElement("textarea");
+      ta.value=nt.text||""; ta.placeholder="예) 정원 조정 관련 학과 반발 — 9월 학과장 간담회 필요";
+      st.replaceChild(ta,bd); ta.focus(); ta.select();
+      var done=function(){ var v=ta.value.trim();
+        if(v!==(nt.text||"")){ nt.text=v; persistNote(nt); } else render(); };
+      ta.addEventListener("blur",done);
+      ta.addEventListener("keydown",function(e){
+        if(e.key==="Escape"){ e.stopPropagation(); ta.value=nt.text||""; ta.blur(); }
+      });
+    });
+    st.appendChild(bd);
+    surf.appendChild(st);
+    bindSticky(st,nt,{x:x,dateAt:dateAt,snap:snap});
+  });
+
+  CANVAS={x:x,dateAt:dateAt,scroller:scroller};
   bindCanvas(surf,svg,{x:x,dateAt:dateAt,snap:snap,ppd:ppd,R0:R0,W:W});
   scroller.appendChild(surf);
   board.appendChild(scroller);
@@ -920,6 +1066,33 @@ function renderCanvas(list){
     requestAnimationFrame(function(){ scroller.scrollLeft=Math.max(0,x(now)-260); });
   }
   return board;
+}
+
+/* 스티커는 머리띠를 잡아 옮긴다. 놓는 순간의 가로 위치가 그 메모의 시점이 된다. */
+function bindSticky(st,nt,S){
+  var hd=st.querySelector(".hd"), drag=null;
+  hd.addEventListener("pointerdown",function(ev){
+    if(ev.button!==0||ev.target.tagName==="BUTTON")return;
+    selNote=nt.id; st.classList.add("sel");
+    var surf=st.parentNode, r=surf.getBoundingClientRect();
+    drag={sx:ev.clientX-r.left,sy:ev.clientY-r.top,ox:parseFloat(st.style.left),oy:parseFloat(st.style.top)};
+    hd.setPointerCapture(ev.pointerId); ev.preventDefault(); ev.stopPropagation();
+  });
+  hd.addEventListener("pointermove",function(ev){
+    if(!drag)return;
+    var surf=st.parentNode, r=surf.getBoundingClientRect();
+    st.style.left=(drag.ox+(ev.clientX-r.left-drag.sx))+"px";
+    st.style.top=Math.max(0,Math.round((drag.oy+(ev.clientY-r.top-drag.sy))/8)*8)+"px";
+  });
+  function up(ev){
+    if(!drag)return; drag=null;
+    try{ hd.releasePointerCapture(ev.pointerId); }catch(e){}
+    nt.date=ds(S.snap(S.dateAt(parseFloat(st.style.left))));
+    nt.y=parseFloat(st.style.top);
+    persistNote(nt);
+  }
+  hd.addEventListener("pointerup",up);
+  hd.addEventListener("pointercancel",up);
 }
 
 /* ---------- 캔버스 조작 ---------- */
@@ -945,6 +1118,7 @@ function bindCanvas(surf,svg,S){
     /* 캔버스 밖에서 손을 뗀 이전 드래그의 잔여물을 치운다. */
     surf.querySelectorAll(".newspan").forEach(function(g){g.remove()});
     svg.querySelectorAll("path.tmp").forEach(function(g){g.remove()});
+    if(ev.target.closest&&ev.target.closest(".sticky"))return;
     var node=ev.target.closest?ev.target.closest(".node"):null;
     var pt=localPt(ev);
 
@@ -969,7 +1143,7 @@ function bindCanvas(surf,svg,S){
       return;
     }
     /* 빈 곳에서 끌기 → 새 과제 */
-    selId=null; renderInspectorInto();
+    selId=null; selNote=null; renderInspectorInto();
     drag={mode:"create",startX:pt.x,startY:pt.y,ghost:null};
     surf.setPointerCapture(ev.pointerId);
   });
@@ -1016,7 +1190,7 @@ function bindCanvas(surf,svg,S){
       if(d.ghost){
         var top=parseFloat(d.ghost.style.top);
         d.ghost.remove();
-        createTask({title:"새 과제",phase:guessPhase(d.d1),dept:"",owner:"",
+        createTask({title:"새 과제",dept:deptAtY(top),owner:"",
           start:dsx(d.d1),end:dsx(d.d2),status:"todo",coop:"",deliverable:"",note:"",deps:[],y:top})
           .then(function(id){
             selId=id; render();
@@ -1057,13 +1231,17 @@ function bindCanvas(surf,svg,S){
   });
 }
 function dsx(d){ return ds(d); }
-function guessPhase(d){
-  var best=PHASES[0].id, bd=Infinity;
-  tasks.forEach(function(t){
-    var s=pd(t.start); if(!s)return;
-    var diff=Math.abs(s-d); if(diff<bd){ bd=diff; best=t.phase||best; }
+/* 드래그를 시작한 세로 위치가 어느 부서 구역인지 찾아 그 부서로 만든다. */
+function deptAtY(y){
+  var bands=layout(visible(),ZOOMS[zoom].ppd), hit="", inside=false, best=Infinity;
+  Object.keys(bands).forEach(function(k){
+    var b=bands[k];
+    if(!inside&&y>=b.top-BAND_GAP&&y<=b.bottom+BAND_GAP/2){ hit=k; inside=true; return; }
+    if(inside)return;
+    var d=Math.min(Math.abs(y-b.top),Math.abs(y-b.bottom));
+    if(d<best){ best=d; hit=k; }
   });
-  return best;
+  return (hit&&hit!==NO_DEPT)?hit:"";
 }
 function makesCycle(targetId,newDepId){
   var seen={}, stack=[newDepId];
@@ -1100,11 +1278,6 @@ function renderInspector(){
   var ti=el("input"); ti.type="text"; ti.id="i_title"; ti.value=esc(t.title);
   ti.addEventListener("change",function(){ commit("title",ti.value.trim()||"(제목 없음)"); });
   box.appendChild(field("과제명","i_title",ti));
-
-  var ph=el("select"); ph.id="i_phase";
-  PHASES.forEach(function(p){ var o=el("option",null,p.name); o.value=p.id; if(p.id===t.phase)o.selected=true; ph.appendChild(o); });
-  ph.addEventListener("change",function(){ commit("phase",ph.value); });
-  box.appendChild(field("추진 단계","i_phase",ph));
 
   var two=el("div","two");
   var dp=el("input"); dp.type="text"; dp.id="i_dept"; dp.setAttribute("list","deptList"); dp.value=esc(t.dept);
@@ -1184,12 +1357,12 @@ function renderInspector(){
   }
   var add=el("select"); add.id="i_addDep";
   var ph0=el("option",null,"＋ 선행과제 추가…"); ph0.value=""; add.appendChild(ph0);
-  PHASES.forEach(function(p){
+  deptOrder(tasks).forEach(function(dk){
     var rows=tasks.filter(function(x){
-      return x.phase===p.id && x.id!==t.id && (!t.deps||t.deps.indexOf(x.id)<0) && !makesCycle(t.id,x.id);
+      return deptKey(x)===dk && x.id!==t.id && (!t.deps||t.deps.indexOf(x.id)<0) && !makesCycle(t.id,x.id);
     }).sort(function(a,b){ return String(a.start||"").localeCompare(String(b.start||"")) });
     if(!rows.length)return;
-    var g=document.createElement("optgroup"); g.label=p.name;
+    var g=document.createElement("optgroup"); g.label=dk;
     rows.forEach(function(x){ var o=el("option",null,x.title+" (종료 "+fmt(x.end)+")"); o.value=x.id; g.appendChild(o); });
     add.appendChild(g);
   });
@@ -1210,13 +1383,11 @@ function renderInspector(){
 /* ---------- 표 ---------- */
 function renderTable(list){
   var w=el("div","tbl-wrap"), tb=el("table"), head=el("thead"), hr=el("tr");
-  ["단계","과제","주관부서","담당자","기간","상태",""].forEach(function(h){ hr.appendChild(el("th",null,h)); });
+  ["과제","주관부서","담당자","기간","상태",""].forEach(function(h){ hr.appendChild(el("th",null,h)); });
   head.appendChild(hr); tb.appendChild(head);
   var body=el("tbody");
   list.forEach(function(r){
-    var tr=el("tr"), ph=PHASES.find(function(p){return p.id===r.phase});
-    var c0=el("td"), tg=el("span","tag",ph?ph.name.split(" · ")[0]:"미지정");
-    tg.style.color=ph?effPhaseColor(r.phase):""; c0.appendChild(tg); tr.appendChild(c0);
+    var tr=el("tr");
     var c1=el("td"); c1.appendChild(el("div","task-t",r.title||""));
     var sub=[]; if(r.deliverable)sub.push("산출물: "+r.deliverable); if(r.coop)sub.push("협조: "+r.coop);
     if(sub.length)c1.appendChild(el("div","task-n",sub.join("  ·  ")));
@@ -1226,7 +1397,8 @@ function renderTable(list){
     if(cf.length)c1.appendChild(el("div","task-w","⚠ 선행 ‘"+cf[0].title+"’ 종료("+fmt(cf[0].end)+") 전에 시작"
       +(cf.length>1?" 외 "+(cf.length-1)+"건":"")));
     tr.appendChild(c1);
-    tr.appendChild(el("td",null,r.dept||"—"));
+    var cd=el("td"); var dtg=el("span","tag",r.dept||NO_DEPT);
+    dtg.style.color=deptColor(deptKey(r)); cd.appendChild(dtg); tr.appendChild(cd);
     tr.appendChild(el("td",null,r.owner||"—"));
     tr.appendChild(el("td","date",fmt(r.start)+" – "+fmt(r.end)));
     var c5=el("td"); c5.appendChild(statusPill(r)); tr.appendChild(c5);
@@ -1271,10 +1443,9 @@ function renderDepts(list){
 
 /* ---------- CSV ---------- */
 function exportCsv(){
-  var rows=[["단계","과제명","주관부서","협조부서","담당자","시작일","종료일","상태","선행과제","선후관계 충돌","산출물","비고"]];
+  var rows=[["과제명","주관부서","협조부서","담당자","시작일","종료일","상태","선행과제","선후관계 충돌","산출물","비고"]];
   visible().forEach(function(t){
-    var ph=PHASES.find(function(p){return p.id===t.phase});
-    rows.push([ph?ph.name:"미지정",t.title||"",t.dept||"",t.coop||"",t.owner||"",t.start||"",t.end||"",
+    rows.push([t.title||"",t.dept||"",t.coop||"",t.owner||"",t.start||"",t.end||"",
       STATUS[effStatus(t)],depNames(t),depConflicts(t).length?"충돌":"",t.deliverable||"",t.note||""]);
   });
   var csv="﻿"+rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"' }).join(",") }).join("\r\n");
