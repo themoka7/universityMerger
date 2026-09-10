@@ -3,10 +3,10 @@
 
 Artifact로 게시할 때는 플랫폼이 <!doctype>·<head>·<body> 골격을 붙여 주지만,
 Pages나 로컬 파일로 열 때는 그 골격이 없으므로 여기서 직접 만든다.
-GitHub Pages 소스가 (branch, /) 로 잡혀 있든 (branch, /docs) 로 잡혀 있든
-열리도록 루트와 docs/ 양쪽에 같은 파일을 둔다.
+Pages 는 .github/workflows/pages.yml 이 docs/ 를 배포한다.
+고칠 파일이 하나가 되도록 출력은 docs/ 한 곳으로 모은다.
 
-출력: index.html, docs/index.html
+출력: docs/index.html, docs/firebase-config.js(없을 때만)
 """
 import pathlib
 
@@ -68,10 +68,9 @@ window.FIREBASE_CONFIG = {
 };
 """
 
-for target in (ROOT, out):
-    (target / "index.html").write_text(page, encoding="utf-8")
-    (target / ".nojekyll").write_text("", encoding="utf-8")
-    cfg = target / "firebase-config.js"
-    if not cfg.exists():
-        cfg.write_text(CONFIG_TEMPLATE, encoding="utf-8")
-print("index.html, docs/index.html 생성 완료 (%.0f KB)" % ((out / "index.html").stat().st_size / 1024))
+(out / "index.html").write_text(page, encoding="utf-8")
+(out / ".nojekyll").write_text("", encoding="utf-8")
+cfg = out / "firebase-config.js"
+if not cfg.exists():
+    cfg.write_text(CONFIG_TEMPLATE, encoding="utf-8")
+print("docs/index.html 생성 완료 (%.0f KB)" % ((out / "index.html").stat().st_size / 1024))
