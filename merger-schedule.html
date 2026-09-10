@@ -409,8 +409,14 @@ function boot(){
       tasks=snap.docs.map(function(s){ var o=s.data()||{}; o.id=s.id; return o; });
       note(""); render();
     }, function(e){
+      var code=e&&e.code;
       local=true; localLoad();
-      note(e&&e.code==="revoked" ? "저장소 접근 권한이 해제되어 읽기 전용으로 표시합니다." : offlineMsg());
+      if(code==="permission-denied")
+        note("Firestore 규칙이 읽기·쓰기를 막고 있습니다. Firebase 콘솔 → Firestore Database → 규칙에서 tasks·meta 컬렉션을 열어 주십시오. 그전까지는 이 브라우저에만 저장됩니다.");
+      else if(code==="revoked") note("저장소 접근 권한이 해제되어 읽기 전용으로 표시합니다.");
+      else if(backend==="firebase")
+        note("Firestore 에 연결하지 못했습니다("+(code||"원인 불명")+"). 설정값과 규칙을 확인해 주십시오. 그전까지는 이 브라우저에만 저장됩니다.");
+      else note(offlineMsg());
       render();
     });
     db.doc("meta/board").onSnapshot(function(s){
