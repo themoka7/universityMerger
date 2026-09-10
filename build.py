@@ -3,7 +3,10 @@
 
 Artifact로 게시할 때는 플랫폼이 <!doctype>·<head>·<body> 골격을 붙여 주지만,
 Pages나 로컬 파일로 열 때는 그 골격이 없으므로 여기서 직접 만든다.
-출력: docs/index.html
+GitHub Pages 소스가 (branch, /) 로 잡혀 있든 (branch, /docs) 로 잡혀 있든
+열리도록 루트와 docs/ 양쪽에 같은 파일을 둔다.
+
+출력: index.html, docs/index.html
 """
 import pathlib
 
@@ -34,8 +37,10 @@ SHELL = """<!doctype html>
 </html>
 """
 
+page = SHELL % (head_extra, body)
 out = ROOT / "docs"
 out.mkdir(exist_ok=True)
-(out / "index.html").write_text(SHELL % (head_extra, body), encoding="utf-8")
-(out / ".nojekyll").write_text("", encoding="utf-8")
-print("docs/index.html 생성 완료 (%.0f KB)" % ((out / "index.html").stat().st_size / 1024))
+for target in (ROOT, out):
+    (target / "index.html").write_text(page, encoding="utf-8")
+    (target / ".nojekyll").write_text("", encoding="utf-8")
+print("index.html, docs/index.html 생성 완료 (%.0f KB)" % ((out / "index.html").stat().st_size / 1024))

@@ -7,11 +7,11 @@
 | 파일 | 설명 |
 | --- | --- |
 | `merger-schedule.html` | 일정판 본체. Claude Artifact 소스(게시 시 `<!doctype>`·`<head>`·`<body>` 골격이 자동으로 감싸집니다) |
-| `docs/index.html` | GitHub Pages용 단독 HTML. `build.py`가 위 파일을 감싸 생성 |
-| `build.py` | `merger-schedule.html` → `docs/index.html` 빌드 |
+| `index.html`, `docs/index.html` | GitHub Pages용 단독 HTML(내용 동일). `build.py`가 위 파일을 감싸 생성 |
+| `build.py` | `merger-schedule.html` → `index.html` · `docs/index.html` 빌드 |
 | `seed/tasks.json` | 초기 과제 27건. Artifact 데이터베이스 `tasks` 컬렉션에 주입한 값이자, 공유 저장에 연결하지 못한 화면에서 쓰는 기본 일정 |
 
-`merger-schedule.html`을 고친 뒤에는 반드시 `python3 build.py`를 실행해 `docs/index.html`을 다시 만들어야 Pages에 반영됩니다.
+`merger-schedule.html`을 고친 뒤에는 반드시 `python3 build.py`를 실행해 Pages용 파일을 다시 만들어야 반영됩니다.
 
 ## 기능
 
@@ -62,7 +62,8 @@ meta/board   { title, target }
 
 ## GitHub Pages
 
-`main` 브랜치의 `/docs` 폴더를 게시합니다 (Settings → Pages → Source: Deploy from a branch → main / docs).
+Pages 소스가 `(브랜치, /)`로 잡혀 있든 `(브랜치, /docs)`로 잡혀 있든 열리도록 루트와 `docs/` 양쪽에 같은 파일을 둡니다.
+권장 설정: Settings → Pages → Source: Deploy from a branch → **main** / **/(root)**.
 Pages에는 공유 저장소가 없으므로 **각자 브라우저에 저장되는 개인 화면**입니다. 여러 부서가 같은 일정을 함께 고치려면 Artifact 쪽 링크를 쓰십시오.
 
 ## 학사 개시 준비 체인
