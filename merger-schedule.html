@@ -9,7 +9,7 @@
   --line:#d7dede; --line-2:#bcc8c9;
   --accent:#0f5f5c; --accent-ink:#0b4442; --accent-soft:#dcebe8; --on-accent:#ffffff;
   --todo:#6b7c82; --doing:#9a6410; --done:#2c6b4f; --late:#a4302a; --hold:#7b6a86;
-  --p1:#0f5f5c; --p2:#2b7a6a; --p3:#5c8f58; --p4:#93903f; --p5:#b07a38; --p6:#a04b3f;
+  --p1:#0f5f5c; --p2:#2b7a6a; --p3:#5c8f58; --p4:#93903f; --p5:#b07a38; --p6:#a3603c; --p7:#a04b3f;
   --shadow:0 1px 2px rgba(19,32,41,.05), 0 10px 26px -16px rgba(19,32,41,.35);
   --row:34px; --lane:202px;
   --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
@@ -23,7 +23,7 @@
     --line:#28373a; --line-2:#3a4d51;
     --accent:#5cbdad; --accent-ink:#8fd7c9; --accent-soft:#1a3532; --on-accent:#08171a;
     --todo:#8ea0a6; --doing:#e0a54a; --done:#6cc295; --late:#e88b80; --hold:#b39ec4;
-    --p1:#2e8f88; --p2:#41a58f; --p3:#7cb46f; --p4:#c0b855; --p5:#d69a4e; --p6:#cf6f5d;
+    --p1:#2e8f88; --p2:#41a58f; --p3:#7cb46f; --p4:#c0b855; --p5:#d69a4e; --p6:#d4835f; --p7:#cf6f5d;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -18px rgba(0,0,0,.8);
   }
 }
@@ -33,7 +33,7 @@
   --line:#28373a; --line-2:#3a4d51;
   --accent:#5cbdad; --accent-ink:#8fd7c9; --accent-soft:#1a3532; --on-accent:#08171a;
   --todo:#8ea0a6; --doing:#e0a54a; --done:#6cc295; --late:#e88b80; --hold:#b39ec4;
-  --p1:#2e8f88; --p2:#41a58f; --p3:#7cb46f; --p4:#c0b855; --p5:#d69a4e; --p6:#cf6f5d;
+  --p1:#2e8f88; --p2:#41a58f; --p3:#7cb46f; --p4:#c0b855; --p5:#d69a4e; --p6:#d4835f; --p7:#cf6f5d;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 30px -18px rgba(0,0,0,.8);
 }
 *{box-sizing:border-box}
@@ -60,6 +60,7 @@ button{font:inherit;color:inherit}
 .stat{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
 .stat .n{font-family:var(--mono);font-size:23px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
 .stat .t{font-size:12px;color:var(--ink-2)}
+.stat.is-warnk .n{color:var(--late)}
 .stat.is-late .n{color:var(--late)} .stat.is-doing .n{color:var(--doing)} .stat.is-done .n{color:var(--done)}
 
 /* toolbar */
@@ -120,6 +121,10 @@ input[type="search"]{min-width:170px}
 .bar.st-late{box-shadow:inset 0 0 0 2px var(--late)}
 .bar.st-hold{filter:grayscale(.6)}
 .bar.narrow{padding:0;min-width:6px}
+.bar.dep-warn{outline:2px solid var(--late);outline-offset:1px}
+.bar.dep-warn::after{content:"!";position:absolute;right:2px;top:-1px;font-size:10px;font-weight:700;
+  color:var(--late);background:var(--surface);border-radius:50%;width:12px;height:12px;
+  display:flex;align-items:center;justify-content:center;line-height:1}
 .bar-label{position:absolute;top:0;height:var(--row);display:flex;align-items:center;
   font-size:11px;color:var(--ink-2);white-space:nowrap;pointer-events:none;z-index:2}
 
@@ -132,6 +137,7 @@ tbody tr:hover{background:var(--surface-3)}
 td.date{font-family:var(--mono);font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ink-2)}
 td .task-t{font-weight:600}
 td .task-n{color:var(--ink-3);font-size:12px;margin-top:2px}
+td .task-w{color:var(--late);font-size:12px;margin-top:3px;font-weight:500}
 .rowact{border:1px solid var(--line-2);background:var(--surface);border-radius:3px;padding:3px 9px;font-size:12px;cursor:pointer;white-space:nowrap}
 
 /* pills */
@@ -174,6 +180,8 @@ dialog .x{border:0;background:none;font-size:20px;line-height:1;cursor:pointer;c
 .form .f{display:flex;flex-direction:column;gap:4px;min-width:0}
 .form .f.full{grid-column:1/-1}
 .form label{font-size:11.5px;letter-spacing:.06em;color:var(--ink-2);font-weight:600}
+.form label .lh{font-weight:400;color:var(--ink-3);letter-spacing:0}
+.form select[multiple]{padding:4px;font-size:12.5px}
 .form input,.form select,.form textarea{width:100%}
 .form textarea{resize:vertical;min-height:52px}
 .form .hintline{grid-column:1/-1;font-size:12px;color:var(--ink-3);margin-top:-2px}
@@ -300,6 +308,10 @@ kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line-2);border
         <input type="text" id="f_coop" placeholder="쉼표로 구분 · 예) 학사과, 정보전산원">
       </div>
       <div class="f full">
+        <label for="f_deps">선행과제 <span class="lh">Ctrl(⌘)+클릭으로 여러 개 선택</span></label>
+        <select id="f_deps" multiple size="5"></select>
+      </div>
+      <div class="f full">
         <label for="f_deliverable">산출물</label>
         <input type="text" id="f_deliverable" placeholder="예) 교육부 제출 신청서">
       </div>
@@ -342,7 +354,8 @@ var PHASES=[
  {id:"p3",name:"3단계 · 법규 정비",hint:"정관·학칙·제규정"},
  {id:"p4",name:"4단계 · 학사·조직 설계",hint:"교육과정·학적·전형"},
  {id:"p5",name:"5단계 · 시스템·인프라",hint:"전산·공간·예산"},
- {id:"p6",name:"6단계 · 개교·안정화",hint:"CI·모집·이행점검"}
+ {id:"p7",name:"6단계 · 학사 개시 준비",hint:"코드·교육과정·시간표"},
+ {id:"p6",name:"7단계 · 개교·안정화",hint:"CI·모집·이행점검"}
 ];
 var STATUS={todo:{k:"todo",n:"예정"},doing:{k:"doing",n:"진행중"},done:{k:"done",n:"완료"},late:{k:"late",n:"지연"},hold:{k:"hold",n:"보류"}};
 var BASE_DEPTS=["기획처","교무과","입학과","학사과","학생과","총무과","재무과","시설과","정보전산원","대외협력과","산학협력단","도서관"];
@@ -425,6 +438,23 @@ function activeDepts(){
   var s={}; tasks.forEach(function(t){ if(t.dept)s[t.dept]=(s[t.dept]||0)+1 });
   return Object.keys(s).sort(function(a,b){ return s[b]-s[a]||a.localeCompare(b,"ko") })
     .map(function(d){ return {name:d,count:s[d]} });
+}
+function byId(id){ for(var i=0;i<tasks.length;i++) if(tasks[i].id===id) return tasks[i]; return null; }
+/* 선행과제가 끝나기 전에 시작하도록 잡힌 경우를 돌려준다. */
+function depConflicts(t){
+  if(!t||!t.deps||!t.deps.length) return [];
+  var s=pd(t.start); if(!s) return [];
+  var bad=[];
+  t.deps.forEach(function(id){
+    var d=byId(id); if(!d) return;
+    var de=pd(d.end); if(de && s<=de) bad.push(d);
+  });
+  return bad;
+}
+function depNames(t){
+  if(!t||!t.deps||!t.deps.length) return "";
+  return t.deps.map(function(id){ var d=byId(id); return d?d.title:null })
+    .filter(Boolean).join(", ");
 }
 function effStatus(t){
   if(t.status==="done"||t.status==="hold")return t.status;
@@ -529,6 +559,7 @@ function renderStats(){
     {n:c.doing,t:"진행중",cls:"is-doing"},
     {n:c.late,t:"기한 초과",cls:"is-late"},
     {n:c.done,t:"완료",cls:"is-done"},
+    {n:tasks.filter(function(t){return depConflicts(t).length}).length,t:"선후관계 충돌",cls:"is-warnk"},
     {n:activeDepts().length,t:"참여 부서",cls:""}
   ];
   items.forEach(function(i){
@@ -614,7 +645,11 @@ function renderGantt(list){
         var lp=pct(s), wp=Math.max(0.6,((Math.round((e-s)/DAY)+1)/total)*100);
         b.style.left=lp+"%"; b.style.width=wp+"%";
         b.style.background=phaseColor(t.phase);
-        b.title=(t.dept||"")+" · "+fmt(t.start)+" ~ "+fmt(t.end)+" · "+STATUS[effStatus(t)].n;
+        var cf=depConflicts(t);
+        if(cf.length)b.classList.add("dep-warn");
+        b.title=(t.dept||"")+" · "+fmt(t.start)+" ~ "+fmt(t.end)+" · "+STATUS[effStatus(t)].n
+          +(cf.length?"\n⚠ 선행 ‘"+cf[0].title+"’ 종료 전 시작":"")
+          +(depNames(t)?"\n선행: "+depNames(t):"");
         b.addEventListener("click",function(){ openForm(t); });
         if(wp/100*chartW < 100){
           b.classList.add("narrow");
@@ -666,7 +701,13 @@ function renderTable(list){
     var c1=el("td"); c1.appendChild(el("div","task-t",r.title||""));
     var sub=[]; if(r.deliverable)sub.push("산출물: "+r.deliverable); if(r.coop)sub.push("협조: "+r.coop);
     if(sub.length)c1.appendChild(el("div","task-n",sub.join("  ·  ")));
+    var dn=depNames(r); if(dn)c1.appendChild(el("div","task-n","선행: "+dn));
     if(r.note)c1.appendChild(el("div","task-n",r.note));
+    var cf=depConflicts(r);
+    if(cf.length){
+      c1.appendChild(el("div","task-w","⚠ 선행 ‘"+cf[0].title+"’ 종료("+fmt(cf[0].end)+") 전에 시작하도록 잡혀 있습니다"
+        +(cf.length>1?" 외 "+(cf.length-1)+"건":"")));
+    }
     tr.appendChild(c1);
     tr.appendChild(el("td",null,r.dept||""));
     tr.appendChild(el("td",null,r.owner||"—"));
@@ -719,10 +760,27 @@ function openForm(t){
   $("#f_start").value=t?esc(t.start):"";
   $("#f_end").value=t?esc(t.end):"";
   $("#f_coop").value=t?esc(t.coop):"";
+  fillDeps(t);
   $("#f_deliverable").value=t?esc(t.deliverable):"";
   $("#f_note").value=t?esc(t.note):"";
   $("#dlg").showModal();
   setTimeout(function(){ $("#f_title").focus(); },30);
+}
+function fillDeps(t){
+  var sel=$("#f_deps"); sel.textContent="";
+  var picked=(t&&t.deps)?t.deps:[];
+  PHASES.forEach(function(p){
+    var rows=tasks.filter(function(x){ return x.phase===p.id && (!t||x.id!==t.id) })
+      .sort(function(a,b){ return String(a.start||"").localeCompare(String(b.start||"")) });
+    if(!rows.length)return;
+    var g=document.createElement("optgroup"); g.label=p.name;
+    rows.forEach(function(x){
+      var o=el("option",null,x.title+"  ("+fmt(x.end)+" 종료)"); o.value=x.id;
+      if(picked.indexOf(x.id)>=0)o.selected=true;
+      g.appendChild(o);
+    });
+    sel.appendChild(g);
+  });
 }
 function onSubmit(e){
   var s=$("#f_start").value, en=$("#f_end").value;
@@ -732,6 +790,7 @@ function onSubmit(e){
     title:$("#f_title").value.trim(), phase:$("#f_phase").value, status:$("#f_status").value,
     dept:$("#f_dept").value.trim(), owner:$("#f_owner").value.trim(),
     start:s, end:en, coop:$("#f_coop").value.trim(),
+    deps:Array.prototype.slice.call($("#f_deps").selectedOptions).map(function(o){return o.value}),
     deliverable:$("#f_deliverable").value.trim(), note:$("#f_note").value.trim()
   };
   var id=editingId;
@@ -748,11 +807,11 @@ function openTarget(){
 
 /* ---------- csv ---------- */
 function exportCsv(){
-  var rows=[["단계","과제명","주관부서","협조부서","담당자","시작일","종료일","상태","산출물","비고"]];
+  var rows=[["단계","과제명","주관부서","협조부서","담당자","시작일","종료일","상태","선행과제","선후관계 충돌","산출물","비고"]];
   visible().forEach(function(t){
     var ph=PHASES.find(function(p){return p.id===t.phase});
     rows.push([ph?ph.name:"미지정",t.title||"",t.dept||"",t.coop||"",t.owner||"",t.start||"",t.end||"",
-      STATUS[effStatus(t)].n,t.deliverable||"",t.note||""]);
+      STATUS[effStatus(t)].n,depNames(t),depConflicts(t).length?"충돌":"",t.deliverable||"",t.note||""]);
   });
   var csv="﻿"+rows.map(function(r){ return r.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"' }).join(",") }).join("\r\n");
   var name="통합추진일정_"+new Date().toISOString().slice(0,10)+".csv";
